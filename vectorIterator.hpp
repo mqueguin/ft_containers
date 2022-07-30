@@ -111,5 +111,14 @@ namespace ft {
 				tmp -= n;
 				return (tmp);
 			}
+
+			value_type &operator[](int n) {
+				return (*(*this + n));
+			}
+			/* FIN OVERLOAD OPERATOR */
+	};
+
+	template <class T> class vectorReverseIterator: public vectorIterator {
+		
 	};
 }
