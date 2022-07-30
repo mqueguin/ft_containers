@@ -80,5 +80,36 @@ namespace ft {
 			value_type &operator*(void) {
 				return (*_ptr);
 			}
+
+			value_type *operator->(void) {
+				return (_ptr);
+			}
+			vectorIterator &operator+=(int n) {
+				for (; n > 0; n--)
+					(*this)++;
+				for (; n < 0; n++)
+					(*this)--;
+			}
+
+			vectorIterator &operator-=(int n) {
+				for (; n > 0; n--)
+					(*this)--;
+				for (; n < 0; n++)
+					(*this)++;
+			}
+
+			vectorIterator operator+(int n) {
+				vectorIterator tmp(*this);
+
+				tmp += n;
+				return (tmp);
+			}
+
+			vectorIterator operator-(int n) {
+				vectorIterator tmp(*this);
+
+				tmp -= n;
+				return (tmp);
+			}
 	};
 }
