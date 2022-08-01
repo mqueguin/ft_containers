@@ -1,17 +1,33 @@
-#include "vectorIterator.hpp"
+#include "iterator.hpp"
+#include "reverseIterator.hpp"
+#include "vector.hpp"
 
 #include <iostream>
 #include <fstream>
 #include <vector>
 
 int main(void) {
-    int tab[5] = {1, 2, 3, 4, 5};
+    //int tab[5] = {1, 2, 3, 4, 5};
+    ft::vector<int> tab(5, 9);
+    ft::vector<int> tab2(tab);
 
-    ft::iterator<int> it;
-    it = &tab[0];
-    ft::iterator<int> it_end = &tab[4];
+    ft::vector<int> tab3(1, 4);
 
-    while (it != it_end) {
+    if (tab == tab2)
+        std::cout << "tab == tab2" << std::endl;
+    else
+        std::cout << "tab != tab2" << std::endl;
+
+    if (tab2 == tab3)
+        std::cout << "tab2 == tab3" << std::endl;
+    else
+        std::cout << "tab2 != tab3" << std::endl;
+
+    std::cout << std::endl;
+    
+    ft::vector<int>::iterator it = tab.begin();
+
+    while (it != tab.end()) {
         std::cout << *it << std::endl;
         ++it;
     }
@@ -21,9 +37,9 @@ int main(void) {
 
     // typedef std::vector<int>::iterator iter_type;
 
-    ft::reverseIterator<int> rev_iterator = &tab[0];
+    /*ft::reverseIterator<int> rev_iterator = &tab[0];
 
-     std::cout << "The fourth element from the end is: " << rev_iterator[3] << '\n';
+     std::cout << "The fourth element from the end is: " << rev_iterator[3] << '\n';*/
 
     return 0;
 }
