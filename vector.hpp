@@ -20,8 +20,8 @@ namespace ft {
 			typedef typename allocator_type::const_pointer const_pointer;
 			typedef ft::iterator<std::random_access_iterator_tag, value_type> iterator;
 			typedef ft::iterator<std::random_access_iterator_tag, const value_type> const_iterator;
-			typedef typename ft::reverseIterator<iterator> reverse_iterator;
-			typedef typename ft::reverseIterator<const_iterator> const_reverse_iterator;
+			typedef typename ft::reverse_iterator<iterator> reverse_iterator;
+			typedef typename ft::reverse_iterator<const_iterator> const_reverse_iterator;
 			typedef typename allocator_type::difference_type difference_type;
 			typedef typename allocator_type::size_type size_type;
 
@@ -221,7 +221,7 @@ namespace ft {
 						_capacity = (size_type)(last - first);
 						_base = _default_allocator_type.allocate(_capacity);
 					}
-					for (; first != last; first++)
+					for (int i = 0; first != last; first++)
 						_default_allocator_type.construct(&_base[i++], *first);
 					_size = 0;
 				}
@@ -240,6 +240,66 @@ namespace ft {
 					_default_allocator_type.construct(&_base[i], val);
 				_size = n;
 			}
+
+			iterator erase(iterator position) {
+				for (iterator it = position; it != end(); it++)
+				{
+					_default_allocator_type.destroy(it.base());
+					_default_allocator_type.construct(it.base(), *(it.base() + 1));
+				}
+				_size--;
+				return (position);
+			}
+
+			iterator erase(iterator first, iterator last) {
+				for (iterator it = first; it != last; it++)
+				{
+					_default_allocator_type.destroy(it.base());
+					_default_allocator_type.construct(it.base(), *(it.base() + (size_type)(last - first)));
+				}
+				_size -= (size_type)(last - first);
+				return (first);
+			}
+
+			void push_back(const value_type &val) {
+				if (_capacity == _size) {
+					size_type newCapacity = _capacity * 2;
+					T *tmp = _default_allocator_type.allocate(newCapacity);
+					if (_size) {
+						for (int i = 0; i < _size; i++)
+							_default_allocator_type.construct(&tmp[i], _base[i]);
+						for (int i = 0; i < _size; i++)
+							_default_allocator_type.destroy(&_base[i]);
+						_default_allocator_type.deallocate(_base, _capacity);
+					}
+					_base = tmp;
+					_capacity = newCapacity;
+				}
+				_size++;
+				_default_allocator_type.construct(&_base[_size - 1], val);
+			}
+
+			void pop_back(void) {
+				_default_allocator_type.destroy(&_base[_size - 1]);
+				_size--;
+			}
+
+			void resize(size_type n, value_type val = value_type()) {
+				return ;
+			}
+
+			iterator insert(iterator position, const value_type &val) {
+				return (position);
+			}
+
+			void insert(iterator position, size_type n, const value_type &val) {
+				return ;
+			}
+
+			template<class InputIterator>
+				void insert(iterator position, InputIterator first, InputIterator last) {
+					return ;
+				}
 	};
 
 	/* OVERLOAD OPERATOR out vector class */

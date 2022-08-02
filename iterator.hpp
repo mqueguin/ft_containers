@@ -86,11 +86,11 @@ namespace ft {
 				return (_ptr != rhs.base());
 			}
 
-			reference &operator*(void) {
+			reference operator*(void) {
 				return (*_ptr);
 			}
 
-			pointer *operator->(void) {
+			pointer operator->(void) {
 				return (_ptr);
 			}
 			iterator &operator+=(difference_type n) {
@@ -108,17 +108,15 @@ namespace ft {
 			}
 
 			iterator operator+(difference_type n) {
-				iterator tmp(*this);
-
-				tmp += n;
-				return (tmp);
+				iterator(_ptr + n);
 			}
 
 			iterator operator-(difference_type n) {
-				iterator tmp(*this);
+				iterator(_ptr - n);
+			}
 
-				tmp -= n;
-				return (tmp);
+			difference_type operator-(const iterator &rhs) {
+				return (_ptr - rhs._ptr);
 			}
 
 			reference operator[](difference_type n) {
