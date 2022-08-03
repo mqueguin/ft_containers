@@ -11,9 +11,9 @@ namespace ft {
 
 		public:
 			typedef T								value_type;
-			typedef std::ptrdiff_t					difference_type;
-			typedef T*								pointer;
-			typedef T&								reference;
+			typedef Distance					difference_type;
+			typedef Pointer							pointer;
+			typedef Reference						reference;
 			typedef std::random_access_iterator_tag	iterator_category;
 		
 		private:
@@ -93,29 +93,29 @@ namespace ft {
 			pointer operator->(void) {
 				return (_ptr);
 			}
-			iterator &operator+=(difference_type n) {
-				for (; n > 0; n--)
-					(*this)++;
-				for (; n < 0; n++)
-					(*this)--;
+			iterator &operator+=(int n) {
+				_ptr += n;
+				return (*this);
 			}
 
-			iterator &operator-=(difference_type n) {
-				for (; n > 0; n--)
-					(*this)--;
-				for (; n < 0; n++)
-					(*this)++;
+			iterator &operator-=(int n) {
+				_ptr -= n;
+				return (*this);
 			}
 
-			iterator operator+(difference_type n) {
-				iterator(_ptr + n);
+			iterator operator+(int n) const {
+				iterator tmp(*this);
+				tmp._ptr += n;
+				return (tmp);
 			}
 
-			iterator operator-(difference_type n) {
-				iterator(_ptr - n);
+			iterator operator-(int n) const{
+				iterator tmp(*this);
+				tmp._ptr -= n;
+				return (tmp);
 			}
 
-			difference_type operator-(const iterator &rhs) {
+			int operator-(const iterator &rhs) const {
 				return (_ptr - rhs._ptr);
 			}
 
@@ -127,7 +127,7 @@ namespace ft {
 			{
 				return iterator<std::random_access_iterator_tag, const value_type>(_ptr);
 			}
-			friend iterator operator+(difference_type n, const iterator& it)
+			friend iterator operator+(int n, const iterator& it)
 			{
 				return iterator(it._ptr + n);
 			}
