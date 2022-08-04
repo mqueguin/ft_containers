@@ -62,29 +62,31 @@ namespace ft {
 			}
 
 			/* Overload operator */
-			bool	operator==(const iterator &rhs) const {
-				return (_ptr == rhs.base());
+			template <class U>
+			bool operator==(const U& lhs) const {
+				return (_ptr == lhs.base());
+			}
+			template <class U>
+			bool operator!=(const U& lhs) const {
+				return _ptr != lhs.base();
+			}
+			template <class U>
+			bool operator<(const U& lhs) const {
+				return _ptr < lhs.base();
+			}
+			template <class U>
+			bool operator>(const U& lhs) const {
+				return _ptr > lhs.base();
+			}
+			template <class U>
+			bool operator<=(const U& lhs) const {
+				return _ptr <= lhs.base();
+			}
+			template <class U>
+			bool operator>=(const U& lhs) const {
+				return _ptr >= lhs.base();
 			}
 
-			bool operator<(const iterator &rhs) const {
-				return (_ptr < rhs.base());
-			}
-
-			bool operator>(const iterator &rhs) const {
-				return (_ptr > rhs.base());
-			}
-
-			bool operator<=(const iterator &rhs) const {
-				return (_ptr <= rhs.base());
-			}
-
-			bool operator>=(const iterator &rhs) const {
-				return (_ptr >= rhs.base());
-			}
-
-			bool operator!=(const iterator &rhs) const {
-				return (_ptr != rhs.base());
-			}
 
 			reference operator*(void) {
 				return (*_ptr);
