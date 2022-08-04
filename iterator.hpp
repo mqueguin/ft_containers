@@ -95,30 +95,34 @@ namespace ft {
 			pointer operator->(void) {
 				return (_ptr);
 			}
-			iterator &operator+=(int n) {
+			iterator &operator+=(difference_type n) {
 				_ptr += n;
 				return (*this);
 			}
 
-			iterator &operator-=(int n) {
+			iterator &operator-=(difference_type n) {
 				_ptr -= n;
 				return (*this);
 			}
 
-			iterator operator+(int n) const {
+			iterator operator+(difference_type n) const {
 				iterator tmp(*this);
 				tmp._ptr += n;
 				return (tmp);
 			}
 
-			iterator operator-(int n) const{
+			iterator operator-(difference_type n) const{
 				iterator tmp(*this);
 				tmp._ptr -= n;
 				return (tmp);
 			}
 
-			int operator-(const iterator &rhs) const {
-				return (_ptr - rhs._ptr);
+			difference_type operator-(iterator const &u) const { /* AUCUUUUUUUUN PUTAIN DE SENS */
+				return (base() - u.base());
+			}
+			template<class U>
+			difference_type operator-(U &u) const {               /* CA N A PAS DE SENS PTDRRRRR */
+				return (base() - u.base());
 			}
 
 			reference operator[](difference_type n) {

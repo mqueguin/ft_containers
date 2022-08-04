@@ -6,6 +6,7 @@
 #include "iterator.hpp"
 #include "reverseIterator.hpp"
 #include "type_traits.hpp"
+#include "compare.hpp"
 
 namespace ft {
 
@@ -416,9 +417,12 @@ namespace ft {
 		bool operator==(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs) {
 			if (lhs.size() != rhs.size())
 				return (false);
-			for (size_t i = 0; i < lhs.size(); i++)
-				if (lhs[i] != rhs[i])
+			typename vector<T, Alloc>::const_iterator it1 = lhs.begin();
+			typename vector<T, Alloc>::const_iterator it2 = rhs.begin();
+			for (; it1 != lhs.end(); ++it1, ++it2) {
+				if (*it1 != *it2)
 					return (false);
+			}
 			return (true);
 		}
 
@@ -429,18 +433,7 @@ namespace ft {
 
 	template<class T, class Alloc>
 		bool operator<(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs) {
-			if (lhs.size() < rhs.size())
-				return (true);
-			else if (lhs.size() > rhs.size())
-				return (false);
-			for (size_t i = 0; i < lhs.size(); i++)
-			{
-				if (lhs[i] < rhs[i])
-					return (true);
-				else if (lhs[i] > rhs[i])
-					return (false);
-			}
-			return (false);
+			return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()));
 		}
 
 	template<class T, class Alloc>
@@ -450,7 +443,7 @@ namespace ft {
 
 	template<class T, class Alloc>
 		bool operator<=(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs) {
-			return (!(lhs > rhs));
+			return (!(rhs < lhs));
 		}
 
 	template<class T, class Alloc>

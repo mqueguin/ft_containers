@@ -21,7 +21,7 @@ namespace ft {
 
 		public:
 			reverse_iterator(void): _ptr(NULL) {};
-			explicit reverse_iterator(iterator const &it) {
+			explicit reverse_iterator(iterator it) {
 				_ptr = it;
 			};
 			template <class Iter>
@@ -83,8 +83,12 @@ namespace ft {
 				return (&(operator*()));
 			}
 
-			reverse_iterator operator-(int n) {
-				return (reverse_iterator(_ptr + n));
+			template<class U>
+			difference_type operator-(const reverse_iterator<U> &u) {
+				return (u.base() - this->_ptr);
+			}
+			reverse_iterator operator-(difference_type n) const {
+				return (reverse_iterator(this->_ptr.operator+(n)));
 			}
 
 			reverse_iterator operator+(difference_type n) {
@@ -95,6 +99,7 @@ namespace ft {
 			value_type &operator[](difference_type n) const {
 				return (base()[-n-1]);
 			}
+
 
             friend reverse_iterator operator+(difference_type n, const reverse_iterator& it) { 
 				return (reverse_iterator(it._ptr - n));
@@ -129,8 +134,8 @@ namespace ft {
 		reverse_iterator<itr> operator+(typename reverse_iterator<itr>::difference_type n, const reverse_iterator<itr>& rev_it) { 
 			return rev_it.base() - n;
 		}
-	template <class itr>
+	/*template <class itr>
 		typename reverse_iterator<itr>::difference_type operator-(const reverse_iterator<itr>& lhs, const reverse_iterator<itr>& rhs) {
-			return (rhs.base() - lhs.base()); 
-		}
+			return (lhs.base() - rhs.base()); 
+		}*/
 }
