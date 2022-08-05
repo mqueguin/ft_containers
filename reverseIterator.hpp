@@ -1,7 +1,7 @@
 #pragma once
 
 #include "iterator.hpp"
-#include <iterator>
+#include "iterator_traits.hpp"
 
 namespace ft {
 
@@ -10,11 +10,11 @@ namespace ft {
 		
 		public:
 			typedef iterator					iterator_type;
-			typedef typename iterator::iterator_category	iterator_category;
-			typedef typename iterator::value_type		value_type;
-			typedef typename iterator::difference_type	difference_type;
-			typedef typename iterator::pointer			pointer;
-			typedef typename iterator::reference			reference;
+			typedef typename iterator_traits<iterator>::iterator_category	iterator_category;
+			typedef typename iterator_traits<iterator>::value_type			value_type;
+			typedef typename iterator_traits<iterator>::difference_type		difference_type;
+			typedef typename iterator_traits<iterator>::pointer				pointer;
+			typedef typename iterator_traits<iterator>::reference			reference;
 
 		private:
 			iterator _ptr;
@@ -100,7 +100,6 @@ namespace ft {
 				return (base()[-n-1]);
 			}
 
-
             friend reverse_iterator operator+(difference_type n, const reverse_iterator& it) { 
 				return (reverse_iterator(it._ptr - n));
 			}
@@ -134,8 +133,4 @@ namespace ft {
 		reverse_iterator<itr> operator+(typename reverse_iterator<itr>::difference_type n, const reverse_iterator<itr>& rev_it) { 
 			return rev_it.base() - n;
 		}
-	/*template <class itr>
-		typename reverse_iterator<itr>::difference_type operator-(const reverse_iterator<itr>& lhs, const reverse_iterator<itr>& rhs) {
-			return (lhs.base() - rhs.base()); 
-		}*/
 }

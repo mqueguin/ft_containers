@@ -1,7 +1,7 @@
 #pragma once
 
 #include <fstream>
-#include <iterator>
+#include "iterator_traits.hpp"
 
 namespace ft {
 
