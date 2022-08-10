@@ -79,7 +79,7 @@ namespace ft {
 				return (*this);
 			}
 
-			value_type *operator->(void) {
+			value_type *operator->(void) const {
 				return (&(operator*()));
 			}
 

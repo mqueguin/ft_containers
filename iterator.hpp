@@ -11,10 +11,10 @@ namespace ft {
 
 		public:
 			typedef T								value_type;
-			typedef Distance					difference_type;
+			typedef Distance						difference_type;
 			typedef Pointer							pointer;
 			typedef Reference						reference;
-			typedef std::random_access_iterator_tag	iterator_category;
+			typedef Category						iterator_category;
 		
 		private:
 			pointer		_ptr;
@@ -88,13 +88,28 @@ namespace ft {
 			}
 
 
-			reference operator*(void) {
-				return (*_ptr);
+			iterator operator-(difference_type n) const {
+				iterator tmp(*this);
+				tmp._ptr -= n;
+				return (tmp);
+			}
+
+			difference_type operator-(iterator const &u) const { /* AUCUUUUUUUUN PUTAIN DE SENS */
+				return (base() - u.base());
+			}
+			template<class U>
+			difference_type operator-(U &u) const {               /* CA N A PAS DE SENS PTDRRRRR */
+				return (base() - u.base());
 			}
 
 			pointer operator->(void) {
 				return (_ptr);
 			}
+
+			reference operator*(void) const {
+				return (*_ptr);
+			}
+
 			iterator &operator+=(difference_type n) {
 				_ptr += n;
 				return (*this);
@@ -109,20 +124,6 @@ namespace ft {
 				iterator tmp(*this);
 				tmp._ptr += n;
 				return (tmp);
-			}
-
-			iterator operator-(difference_type n) const{
-				iterator tmp(*this);
-				tmp._ptr -= n;
-				return (tmp);
-			}
-
-			difference_type operator-(iterator const &u) const { /* AUCUUUUUUUUN PUTAIN DE SENS */
-				return (base() - u.base());
-			}
-			template<class U>
-			difference_type operator-(U &u) const {               /* CA N A PAS DE SENS PTDRRRRR */
-				return (base() - u.base());
 			}
 
 			reference operator[](difference_type n) {
