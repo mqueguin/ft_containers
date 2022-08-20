@@ -1,13 +1,14 @@
 #include "iterator.hpp"
 #include "reverseIterator.hpp"
 #include "vector.hpp"
+#include "stack.hpp"
 
 #include <iostream>
 #include <fstream>
 #include <vector>
 
 int main(void) {
-    //int tab[5] = {1, 2, 3, 4, 5};
+   /* //int tab[5] = {1, 2, 3, 4, 5};
     ft::vector<int> tab(5, 9);
     ft::vector<int> tab2(tab);
 
@@ -30,8 +31,16 @@ int main(void) {
     while (it != tab.end()) {
         std::cout << *it << std::endl;
         ++it;
-    }
+    }*/
 
+    ft::stack<int> stack;
+
+    std::cout << "JE passe bien ici" << std::endl;
+    stack.push(41);
+    std::cout << "Maintenant je passe ici" << std::endl;
+    stack.push(29);
+
+    std::cout << "J arrive a la fin du programme" << std::endl;
    // std::vector<int> myvector;
     //for (int i=0; i<10; i++) myvector.push_back(i);  // myvector: 0 1 2 3 4 5 6 7 8 9
 

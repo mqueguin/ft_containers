@@ -203,7 +203,7 @@ namespace ft {
 			}
 			
 			void reserve(size_type n) {
-				if ( n > this->max_size())
+				if (n > this->max_size())
 					throw std::length_error("vector::reserve is too big");
 				if (n > _capacity) {
 					T *tmp = _default_allocator_type.allocate(n);
@@ -211,7 +211,8 @@ namespace ft {
 						_default_allocator_type.construct(&tmp[i], _base[i]);
 					for (size_type i = 0; i < _size; i++)
 						_default_allocator_type.destroy(&_base[i]);
-					_default_allocator_type.deallocate(_base, _capacity);
+					if (_capacity)
+						_default_allocator_type.deallocate(_base, _capacity);
 					_base = tmp;
 					_capacity = n;
 				}
@@ -219,24 +220,29 @@ namespace ft {
 
 			template<class InputIterator>
 				void assign(InputIterator first, InputIterator last, typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type = InputIterator()) {
-					T* tmp;
-					size_t	n = 0;
+					size_type n = 0;
+
 					for (InputIterator it = first; it != last; it++)
 						n++;
-					if (n > capacity())
-						tmp = _default_allocator_type.allocate(n);
-					else
-						tmp = _default_allocator_type.allocate(capacity());
-					size_t	i = 0;
-					for (InputIterator it = first; it != last; ++it)
-						_default_allocator_type.construct(&tmp[i++], *it);
-					for (iterator it = begin(); it != end(); ++it)
-						_default_allocator_type.destroy(&(*it));
-					_default_allocator_type.deallocate(_base, capacity());
-					if (n > capacity())
+					if (n > capacity()) {
+						T *tmp = _default_allocator_type.allocate(n);
+						size_type i = 0;
+						for (InputIterator it = first; it != last; it++)
+							_default_allocator_type.construct(&tmp[i++], *it);
+						for (size_type i = 0; i < n; i++)
+							_default_allocator_type.destroy(&_base[i]);
+						_default_allocator_type.deallocate(_base, _capacity);
+						_base = tmp;
 						_capacity = n;
-					_base = tmp;
-					_size = n;
+						_size = n;
+					} else {
+						for (size_type i = 0; i < n; i++)
+							_default_allocator_type.destroy(&_base[i]);
+						size_type i = 0;
+						for (InputIterator it = first; it != last; it++)
+							_default_allocator_type.construct(&_base[i++], *it);
+						_size = n;
+					}
 				}
 			
 			void assign(size_type n, const value_type &val) {
