@@ -1,4 +1,5 @@
-#pragma once
+#ifndef VECTOR_HPP
+#define VECTOR_HPP
 
 #include <iostream>
 #include <fstream>
@@ -204,7 +205,7 @@ namespace ft {
 			
 			void reserve(size_type n) {
 				if (n > this->max_size())
-					throw std::length_error("vector::reserve is too big");
+					throw std::length_error("vector::reserve");
 				if (n > _capacity) {
 					T *tmp = _default_allocator_type.allocate(n);
 					for (size_type i = 0; i < _size; i++)
@@ -462,3 +463,5 @@ namespace ft {
 			x.swap(y);
 		}
 }
+
+#endif

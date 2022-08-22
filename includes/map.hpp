@@ -300,7 +300,7 @@ namespace ft
 
 			ft::pair<iterator,iterator>	equal_range(const Key& key)
 			{
-				return make_pair(lower_bound(key), upper_bound(key));
+				return (make_pair(lower_bound(key), upper_bound(key)));
 			}
 			ft::pair<const_iterator,const_iterator>	equal_range(const Key& key) const
 			{
