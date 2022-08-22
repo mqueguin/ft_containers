@@ -55,15 +55,16 @@ namespace ft {
 						_default_allocator_type.construct(&_base[_size++], *(first++));
 				}
 
-			vector (vector const &x) {
-				_capacity = x._capacity;
+			vector (vector const &x): _base(0), _size(0), _capacity(0) {
+				/*_capacity = x._capacity;
 				_size = x._size;
 				if (x._size)
 				{
 					_base = _default_allocator_type.allocate(_capacity);
 					for (size_type i = 0; i < _size; i++)
 						_default_allocator_type.construct(&_base[i], x._base[i]);
-				}
+				}*/
+				*this = x;
 			}
 
 			~vector(void) {
@@ -74,7 +75,7 @@ namespace ft {
 
 			/* OVERLOAD OPERATOR + */
 			vector &operator=(const vector &x) {
-				for (iterator it = begin(); _size && it != end(); it++)
+				/*for (iterator it = begin(); _size && it != end(); it++)
 					_default_allocator_type.destroy(&*it);
 				if (_capacity < x._capacity)
 				{
@@ -86,6 +87,11 @@ namespace ft {
 				_size = x._size;
 				for (size_type i = 0; i < _size; i++)
 					_default_allocator_type.construct(&_base[i], x._base[i]);
+				return (*this);*/
+				if (&x != this) {
+					_default_allocator_type = x._default_allocator_type;
+					assign(x.begin(), x.end());
+				}
 				return (*this);
 			}
 
@@ -226,13 +232,15 @@ namespace ft {
 					for (InputIterator it = first; it != last; it++)
 						n++;
 					if (n > capacity()) {
+						for (size_type i = 0; i < _size; i++)
+							_default_allocator_type.destroy(&_base[i]);
+						if (_capacity)
+							_default_allocator_type.deallocate(_base, _capacity);
 						T *tmp = _default_allocator_type.allocate(n);
 						size_type i = 0;
 						for (InputIterator it = first; it != last; it++)
 							_default_allocator_type.construct(&tmp[i++], *it);
-						for (size_type i = 0; i < n; i++)
-							_default_allocator_type.destroy(&_base[i]);
-						_default_allocator_type.deallocate(_base, _capacity);
+						
 						_base = tmp;
 						_capacity = n;
 						_size = n;
@@ -422,7 +430,7 @@ namespace ft {
 	/* OVERLOAD OPERATOR out vector class */
 	template<class T, class Alloc>
 		bool operator==(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs) {
-			if (lhs.size() != rhs.size())
+			/*if (lhs.size() != rhs.size())
 				return (false);
 			typename vector<T, Alloc>::const_iterator it1 = lhs.begin();
 			typename vector<T, Alloc>::const_iterator it2 = rhs.begin();
@@ -430,7 +438,10 @@ namespace ft {
 				if (*it1 != *it2)
 					return (false);
 			}
-			return (true);
+			return (true);*/
+			if (lhs.size() != rhs.size())
+				return (false);
+			return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));
 		}
 
 	template<class T, class Alloc>
