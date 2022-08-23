@@ -35,7 +35,9 @@ namespace ft {
 			size_type _capacity;
 		
 		public:
-			explicit vector(const allocator_type &alloc = allocator_type()): _base(NULL), _default_allocator_type(alloc), _size(0), _capacity(0) {}
+			explicit vector(const allocator_type &alloc = allocator_type()): _default_allocator_type(alloc), _size(0), _capacity(0) {
+				_base = NULL;
+			}
 
 			explicit vector(size_type n, const value_type &val = value_type(), const allocator_type &alloc = allocator_type()): _default_allocator_type(alloc), _size(n), _capacity(n) {
 				_base = _default_allocator_type.allocate(_capacity);
@@ -44,27 +46,20 @@ namespace ft {
 			}
 
 			template <class InputIterator>
-				vector(InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator(), const allocator_type &alloc = allocator_type()): _default_allocator_type(alloc) {
-					_size = 0;
-					size_type n = 0;
+				vector(InputIterator first, InputIterator last, typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type = InputIterator(), const allocator_type &alloc = allocator_type()): _default_allocator_type(alloc), _size(0) {
 					for (InputIterator it = first; it != last; it++)
-						n++;
-					_capacity = n;
+						_size++;
+					_capacity = _size;
 					_base = _default_allocator_type.allocate(_capacity);
-					for (; first != last;)
-						_default_allocator_type.construct(&_base[_size++], *(first++));
+					size_type i = 0;
+					for (InputIterator it = first; it  != last; it++, i++)
+						_default_allocator_type.construct(&_base[i], *it);
 				}
 
-			vector (vector const &x): _base(0), _size(0), _capacity(0) {
-				/*_capacity = x._capacity;
-				_size = x._size;
-				if (x._size)
-				{
-					_base = _default_allocator_type.allocate(_capacity);
-					for (size_type i = 0; i < _size; i++)
-						_default_allocator_type.construct(&_base[i], x._base[i]);
-				}*/
-				*this = x;
+			vector (vector const &x): _default_allocator_type(x._default_allocator_type), _size(x._size), _capacity(x._capacity) {
+				_base = _default_allocator_type.allocate(_capacity);
+				for (size_type i = 0; i < _size; i++)
+					_default_allocator_type.construct(&_base[i], x._base[i]);
 			}
 
 			~vector(void) {
@@ -75,23 +70,19 @@ namespace ft {
 
 			/* OVERLOAD OPERATOR + */
 			vector &operator=(const vector &x) {
-				/*for (iterator it = begin(); _size && it != end(); it++)
-					_default_allocator_type.destroy(&*it);
-				if (_capacity < x._capacity)
-				{
-					if (_capacity)
-						_default_allocator_type.deallocate(_base, _capacity);
-					_capacity = x._capacity;
-					_base = _default_allocator_type.allocate(x._capacity);
+				if (this == &x)
+					return (*this);
+				for (size_type i = 0; i < _size; i++)
+					_default_allocator_type.destroy(&_base[i]);
+				if (_capacity < x._size) {
+					_default_allocator_type.deallocate(_base, _capacity);
+					_capacity = x._size;
+					_base = _default_allocator_type.allocate(_capacity);
 				}
+				_default_allocator_type = x._default_allocator_type;
 				_size = x._size;
 				for (size_type i = 0; i < _size; i++)
 					_default_allocator_type.construct(&_base[i], x._base[i]);
-				return (*this);*/
-				if (&x != this) {
-					_default_allocator_type = x._default_allocator_type;
-					assign(x.begin(), x.end());
-				}
 				return (*this);
 			}
 
@@ -228,46 +219,32 @@ namespace ft {
 			template<class InputIterator>
 				void assign(InputIterator first, InputIterator last, typename enable_if<!is_integral<InputIterator>::value, InputIterator>::type = InputIterator()) {
 					size_type n = 0;
-
 					for (InputIterator it = first; it != last; it++)
-						n++;
-					if (n > capacity()) {
-						for (size_type i = 0; i < _size; i++)
-							_default_allocator_type.destroy(&_base[i]);
-						if (_capacity)
-							_default_allocator_type.deallocate(_base, _capacity);
-						T *tmp = _default_allocator_type.allocate(n);
-						size_type i = 0;
-						for (InputIterator it = first; it != last; it++)
-							_default_allocator_type.construct(&tmp[i++], *it);
-						
-						_base = tmp;
+						++n;
+					for (size_type i = 0; i < _size; i++)
+						_default_allocator_type.destroy(&_base[i]);
+					if (_capacity < n) {
+						_default_allocator_type.deallocate(_base, _capacity);
 						_capacity = n;
-						_size = n;
-					} else {
-						for (size_type i = 0; i < n; i++)
-							_default_allocator_type.destroy(&_base[i]);
-						size_type i = 0;
-						for (InputIterator it = first; it != last; it++)
-							_default_allocator_type.construct(&_base[i++], *it);
-						_size = n;
+						_base = _default_allocator_type.allocate(n);
 					}
+					_size = n;
+					size_type i = 0;
+					for (InputIterator it = first; it != last; it++)
+						_default_allocator_type.construct(&_base[i], *it);
 				}
 			
 			void assign(size_type n, const value_type &val) {
-				this->clear();
-				if (n == 0)
-					return ;
-				if ((size_type)(_capacity) >= n) {
-					for (size_type i = 0; i < n; i++)
-						_default_allocator_type.construct(&_base[_size++], val);
-				} else {
+				for (size_type i = 0; i < _size; i++)
+					_default_allocator_type.destroy(&_base[i]);
+				if (_capacity < n) {
 					_default_allocator_type.deallocate(_base, _capacity);
 					_capacity = n;
 					_base = _default_allocator_type.allocate(_capacity);
-					for (size_type i = 0; i < n; i++)
-						_default_allocator_type.construct(&_base[_size++], val);
 				}
+				_size = n;
+				for (size_type i = 0; i < n; i++)
+					_default_allocator_type.construct(&_base[i], val);
 			}
 
 			iterator erase(iterator position) {
