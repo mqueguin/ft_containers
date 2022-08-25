@@ -18,7 +18,7 @@ namespace ft {
 		public:
 			explicit stack(const container_type &container = container_type()): c(container) {}
 
-			//virtual ~stack(void) {}
+			virtual ~stack(void) {}
 			
 			size_type size(void) const {
 				return (c.size());

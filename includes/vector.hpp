@@ -56,16 +56,19 @@ namespace ft {
 						_default_allocator_type.construct(&_base[i], *it);
 				}
 
-			vector (vector const &x): _default_allocator_type(x._default_allocator_type), _size(x._size), _capacity(x._capacity) {
-				_base = _default_allocator_type.allocate(_capacity);
-				for (size_type i = 0; i < _size; i++)
-					_default_allocator_type.construct(&_base[i], x._base[i]);
+			vector (vector const &x): _default_allocator_type(x._default_allocator_type), _size(x._size), _capacity(x._size) {
+				if (_capacity > 0) {
+					_base = _default_allocator_type.allocate(_capacity);
+					for (size_type i = 0; i < _size; i++)
+						_default_allocator_type.construct(&_base[i], x._base[i]);
+				}
 			}
 
 			~vector(void) {
 				for (size_type i = 0; i < _size; i++)
 					_default_allocator_type.destroy(&_base[i]);
-				_default_allocator_type.deallocate(_base, _capacity);
+				if (_capacity > 0)
+					_default_allocator_type.deallocate(_base, _capacity);
 			}
 
 			/* OVERLOAD OPERATOR + */
@@ -227,6 +230,9 @@ namespace ft {
 						_default_allocator_type.deallocate(_base, _capacity);
 						_capacity = n;
 						_base = _default_allocator_type.allocate(n);
+						size_type j = 0;
+						for (InputIterator it = first; it != last; it++, j++)
+							_default_allocator_type.construct(&_base[j], *it);
 					}
 					_size = n;
 					size_type i = 0;
