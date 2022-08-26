@@ -337,9 +337,7 @@ namespace ft {
 					insert(position, val);
 				else if (size() + n >= capacity()) {
 					T *tmp;
-					size_type newCapacity = capacity() * 2;
-					if (capacity() + n > capacity())
-						newCapacity = capacity() + n;
+					size_type newCapacity = _size + n;
 					tmp = _default_allocator_type.allocate(newCapacity);
 					size_type i = 0;
 					for (iterator it = begin(); it != end() + 1; ++it) {
