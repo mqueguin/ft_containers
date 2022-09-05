@@ -237,7 +237,7 @@ namespace ft {
 					_size = n;
 					size_type i = 0;
 					for (InputIterator it = first; it != last; it++)
-						_default_allocator_type.construct(&_base[i], *it);
+						_default_allocator_type.construct(&_base[i++], *it);
 				}
 			
 			void assign(size_type n, const value_type &val) {

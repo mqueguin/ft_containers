@@ -4,101 +4,57 @@
 
 using namespace std;
 
-template <class T>
-void	print_vector(ft::vector<T> &test)
+#define TESTED_TYPE int
+
+int             main(void)
 {
-	typename ft::vector<T>::iterator		beg = test.begin();
-	typename ft::vector<T>::iterator		end = test.end();
-	std::cout << "size : " << test.size() << ", capacity : " << test.capacity() << std::endl;
-	for (typename ft::vector<T>::iterator it = beg; it != end; it++)
-	{
-		std::cout << *it << " ";
-		if (((it - beg) % 10 == 9) && it > beg)
-			std::cout << std::endl;
-	}
-	std::cout << std::endl;
-}
+        ft::vector<TESTED_TYPE> vct(7);
+        ft::vector<TESTED_TYPE> vct_two(4);
+        ft::vector<TESTED_TYPE> vct_three;
+        ft::vector<TESTED_TYPE> vct_four;
 
-template <class T>
-void	print_real_vector(vector<T> &test)
-{
-	typename vector<T>::iterator		beg = test.begin();
-	typename vector<T>::iterator		end = test.end();
-	std::cout << "size : " << test.size() << ", capacity : " << test.capacity() << std::endl;
-	for (typename vector<T>::iterator it = beg; it != end; it++)
-	{
-		std::cout << *it << " ";
-		if (((it - beg) % 10 == 9) && it > beg)
-			std::cout << std::endl;
-	}
-	std::cout << std::endl;
-}
+        for (unsigned long int i = 0; i < vct.size(); ++i)
+                vct[i] = (vct.size() - i) * 3;
+        for (unsigned long int i = 0; i < vct_two.size(); ++i)
+                vct_two[i] = (vct_two.size() - i) * 5;
+        /*printSize(vct);
+        printSize(vct_two);*/
 
-template <class T>
-void insert_testReal() {
-	std::cout << std::endl << "INSERT REAL TESTS" << std::endl;
-	vector<T> test(1, 1);
-	vector<T> test2(5, 5);
+/*        vct_three.assign(vct.begin(), vct.end());
+*/        vct.assign(vct_two.begin(), vct_two.end());
+		for (ft::vector<int>::iterator it = vct_two.begin(); it != vct_two.end(); ++it)
+			std::cout << *it << std::endl;
+		for (ft::vector<int>::iterator it = vct.begin(); it != vct.end(); ++it)
+			std::cout << *it << std::endl;
+        /*vct_two.assign(2, 42);
+        vct_four.assign(4, 21);*/
 
-	test.insert(test.begin(), 200, 12);
-	print_real_vector<T>(test);
-	test.insert(test.begin() + 12, 200, 30);
-	print_real_vector<T>(test);
-	/*test.insert(test.end(), 12, 50);
-	print_vector<T>(test);
-	test.insert(test.end() - 1, 0, 60);
-	print_vector<T>(test);
-	test.insert(test.end() - 1, 1, 70);
-	print_vector<T>(test);
-	test.insert(test.begin() + 412, test2.begin(), test2.end());
-	print_vector<T>(test);
-	test.insert(test.begin() + 6, test2.begin(), test2.end());
-	print_vector<T>(test);
-	test.insert(test.end(), test2.begin(), test2.end());
-	print_vector<T>(test);*/
-}
+        std::cout << "\t### After assign(): ###" << std::endl;
 
-template <class T>
-void	insert_tests()
-{
-	std::cout << std::endl << "INSERT REAL TESTS" << std::endl;
-	ft::vector<T> test(1, 1);
-	ft::vector<T> test2(5, 5);
+        /*printSize(vct);
+        printSize(vct_two);
+        printSize(vct_three);
+        printSize(vct_four);*/
+		/*for (ft::vector<int>::iterator it = vct_four.begin(); it != vct_four.end(); ++it)
+			std::cout << *it << std::endl;
 
-	test.insert(test.begin(), 200, 12);
-	print_vector<T>(test);
-	test.insert(test.begin() + 12, 200, 30);
-	print_vector<T>(test);
-	/*test.insert(test.end(), 12, 50);
-	print_vector<T>(test);
-	test.insert(test.end() - 1, 0, 60);
-	print_vector<T>(test);
-	test.insert(test.end() - 1, 1, 70);
-	print_vector<T>(test);
-	test.insert(test.begin() + 412, test2.begin(), test2.end());
-	print_vector<T>(test);
-	test.insert(test.begin() + 6, test2.begin(), test2.end());
-	print_vector<T>(test);
-	test.insert(test.end(), test2.begin(), test2.end());
-	print_vector<T>(test);*/
-}
+		std::cout << "Valeur de size: " << vct_four.size() << " et valeur de capacity: " << vct_four.capacity() << std::endl;
 
-int main()
-{
-	/*test.insert(test.end(), 12, 50);
-	print_vector<T>(test);
-	test.insert(test.end() - 1, 0, 60);
-	print_vector<T>(test);
-	test.insert(test.end() - 1, 1, 70);
-	print_vector<T>(test);
-	test.insert(test.begin() + 412, test2.begin(), test2.end());
-	print_vector<T>(test);
-	test.insert(test.begin() + 6, test2.begin(), test2.end());
-	print_vector<T>(test);
-	test.insert(test.end(), test2.begin(), test2.end());
-	print_vector<T>(test);*/
-	insert_tests<int>();
-	insert_testReal<int>();
+		std::vector<int> v(4, 21);
 
-	return (0);
+		for (std::vector<int>::iterator it = v.begin(); it != v.end(); ++it)
+			std::cout << *it << std::endl;
+		std::cout << "Valeur de size: " << v.size() << " et valeur de capacity: " << v.capacity() << std::endl;*/
+        /*vct_four.assign(6, 84);
+        printSize(vct_four);
+
+        std::cout << "\t### assign() on enough capacity and low size: ###" << std::endl;
+
+        vct.assign(5, 53);
+        vct_two.assign(vct_three.begin(), vct_three.begin() + 3);
+
+        printSize(vct);
+        printSize(vct_two);*/
+
+        return (0);
 }
