@@ -9,8 +9,9 @@
 #define NC "\e[0m"
 #define BOLD "\e[1m"
 #define RED "\e[31m"
-#define GRN "\e[0;32m"
-#define CYN "\e[0;36m"
+#define GRN "\e[1;32m"
+#define CYN "\e[1;36m"
+#define YEL "\e[1;33m"
 #define REDB "\e[41m"
 
 int	compare_files(const std::string &test) {
