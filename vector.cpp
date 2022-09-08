@@ -1603,12 +1603,4 @@ int main(void) {
 	
 	std::cout << std::endl;
 	std::cout << BOLD "================ " NC CYN "VECTOR TESTS FINISHED" NC BOLD " ================" << std::endl;
-
-
-
-
-
-
-
-
 }
