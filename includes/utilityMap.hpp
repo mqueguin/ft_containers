@@ -72,4 +72,18 @@ namespace ft {
 	{
 		return !(lhs < rhs);
 	}
+
+	template <typename T1, typename T2, typename Res>
+	struct binary_function {
+		typedef T1 first_argument_type;
+		typedef T2 second_argument_type;
+		typedef Res result_type;
+	};
+	template <typename T>
+	struct less: binary_function<T, T, bool> {
+		bool operator()(const T& x, const T& y) const {
+			return x < y;
+		}
+	};
+
 }

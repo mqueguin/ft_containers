@@ -9,7 +9,7 @@
 
 namespace ft
 {
-	template< class Key, class T, class Compare = std::less<Key>, class Allocator = std::allocator< ft::pair<const Key, T> > >
+	template< class Key, class T, class Compare = ft::less<Key>, class Allocator = std::allocator<ft::pair<const Key, T> > >
 	class map
 	{
 	
@@ -39,7 +39,7 @@ namespace ft
 			typedef typename allocator_type::template rebind< rb_tree_node< value_type > >::other node_allocator_type;
 
 		public:
-			class value_compare
+			class are
 			{
 				friend class map<Key, T, Compare, Allocator>;
 				public:
