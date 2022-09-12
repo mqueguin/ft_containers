@@ -301,7 +301,227 @@ int main(void) {
 	
 
 	/* ITERATORS TESTS: REND() MY MAP */
+	ft::map<char, int> mymap4;
+
+	file << "ITERATORS TESTS: REND()" << std::endl;
+	file << "Create a map and assign some elements" << std::endl;
+	for (char c = 'a', i = 8; c <= 'c'; c++, i *= 12)
+		mymap4[c] = i;
+	file << "Map contains: " << std::endl;
+	for (ft::map<char, int>::reverse_iterator it = mymap4.rbegin(); it != mymap4.rend(); it++)
+		file << it->first << " => " << it->second << std::endl;
+	file << "Last element of the map: " << (--mymap4.rend())->first << " => " << (--mymap4.rend())->second << std::endl;
+	file << "Size of the map: " << mymap4.size() << std::endl;
+	file << "Max size of the map: " << mymap4.max_size() << std::endl;
+	file << std::endl;
+
+	/* ITERATORS TESTS: REND() STL MAP */
+	std::map<char, int> mymap4stl;
+
+	file2 << "ITERATORS TESTS: REND()" << std::endl;
+	file2 << "Create a map and assign some elements" << std::endl;
+	for (char c = 'a', i = 8; c <= 'c'; c++, i *= 12)
+		mymap4stl[c] = i;
+	file2 << "Map contains: " << std::endl;
+	for (std::map<char, int>::reverse_iterator it = mymap4stl.rbegin(); it != mymap4stl.rend(); it++)
+		file2 << it->first << " => " << it->second << std::endl;
+	file2 << "Last element of the map: " << (--mymap4stl.rend())->first << " => " << (--mymap4stl.rend())->second << std::endl;
+	file2 << "Size of the map: " << mymap4stl.size() << std::endl;
+	file2 << "Max size of the map: " << mymap4stl.max_size() << std::endl;
+	file2 << std::endl;
+
+	if (compare_files("ITERATORS TESTS: REND()", 0) == 0)
+		resize_files(file, file2);
 	
+
+	/* ICAPACITY TESTS: EMPTY() MY MAP */
+	ft::map<char, int> mymap5;
+
+	file << "CAPACITY TESTS: EMPTY()" << std::endl;
+	file << "Create a map and assign some elements" << std::endl;
+	for (char c = 'c', i = 45; c <= 'g'; c++, i *= 3)
+		mymap5[c] = i;
+	file << "Map contains: " << std::endl;
+	for (ft::map<char, int>::iterator it = mymap5.begin(); it != mymap5.end(); it++)
+		file << it->first << " => " << it->second << std::endl;
+	file << "Is the map empty? " << mymap5.empty() << std::endl;
+	file << "Size of the map: " << mymap5.size() << std::endl;
+	file << "Max size of the map: " << mymap5.max_size() << std::endl;
+	file << "Erase all elements of the map" << std::endl;
+	mymap5.erase(mymap5.begin(), mymap5.end());
+	file << "Is the map empty? " << mymap5.empty() << std::endl;
+	file << "Size of the map: " << mymap5.size() << std::endl;
+	file << "Max size of the map: " << mymap5.max_size() << std::endl;
+	file << std::endl;
+
+	/* CAPACITY TESTS: EMPTY() STL MAP */
+	std::map<char, int> mymap5stl;
+
+	file2 << "CAPACITY TESTS: EMPTY()" << std::endl;
+	file2 << "Create a map and assign some elements" << std::endl;
+	for (char c = 'c', i = 45; c <= 'g'; c++, i *= 3)
+		mymap5stl[c] = i;
+	file2 << "Map contains: " << std::endl;
+	for (std::map<char, int>::iterator it = mymap5stl.begin(); it != mymap5stl.end(); it++)
+		file2 << it->first << " => " << it->second << std::endl;
+	file2 << "Is the map empty? " << mymap5stl.empty() << std::endl;
+	file2 << "Size of the map: " << mymap5stl.size() << std::endl;
+	file2 << "Max size of the map: " << mymap5stl.max_size() << std::endl;
+	file2 << "Erase all elements of the map" << std::endl;
+	mymap5stl.erase(mymap5stl.begin(), mymap5stl.end());
+	file2 << "Is the map empty? " << mymap5stl.empty() << std::endl;
+	file2 << "Size of the map: " << mymap5stl.size() << std::endl;
+	file2 << "Max size of the map: " << mymap5stl.max_size() << std::endl;
+	file2 << std::endl;
+
+	if (compare_files("CAPACITY TESTS: EMPTY()", 0) == 0)
+		resize_files(file, file2);
+	
+
+	/* CAPACITY TESTS: SIZE() MY MAP */
+	ft::map<char, int> mymap6;
+
+	file << "CAPACITY TESTS: SIZE()" << std::endl;
+	file << "Create a map and assign some elements" << std::endl;
+	for (char c = 'a', i = 22; c <= 'd'; c++, i *= 3)
+		mymap6[c] = i;
+
+	file << "Map contains: " << std::endl;
+	for (ft::map<char, int>::iterator it = mymap6.begin(); it != mymap6.end(); it++)
+		file << it->first << " => " << it->second << std::endl;
+	file << "Size of the map: " << mymap6.size() << std::endl;
+	file << "Max size of the map: " << mymap6.max_size() << std::endl;
+	file << "Erase the second element of the map" << std::endl;
+	ft::map<char, int>::iterator it = mymap6.find('b');
+	mymap6.erase(it);
+	file << "Map contains: " << std::endl;
+	for (ft::map<char, int>::iterator it = mymap6.begin(); it != mymap6.end(); it++)
+		file << it->first << " => " << it->second << std::endl;
+	file << "Size of the map: " << mymap6.size() << std::endl;
+	file << "Max size of the map: " << mymap6.max_size() << std::endl;
+	file << "Erase all elements of the map" << std::endl;
+	mymap6.erase(mymap6.begin(), mymap6.end());
+	file << "Size of the map: " << mymap6.size() << std::endl;
+	file << "Max size of the map: " << mymap6.max_size() << std::endl;
+	file << std::endl;
+
+	/* CAPACITY TESTS: SIZE() STL MAP */
+	std::map<char, int> mymap6stl;
+
+	file2 << "CAPACITY TESTS: SIZE()" << std::endl;
+	file2 << "Create a map and assign some elements" << std::endl;
+	for (char c = 'a', i = 22; c <= 'd'; c++, i *= 3)
+		mymap6stl[c] = i;
+
+	file2 << "Map contains: " << std::endl;
+	for (std::map<char, int>::iterator it = mymap6stl.begin(); it != mymap6stl.end(); it++)
+		file2 << it->first << " => " << it->second << std::endl;
+	file2 << "Size of the map: " << mymap6stl.size() << std::endl;
+	file2 << "Max size of the map: " << mymap6stl.max_size() << std::endl;
+	file2 << "Erase the second element of the map" << std::endl;
+	std::map<char, int>::iterator it2 = mymap6stl.find('b');
+	mymap6stl.erase(it2);
+	file2 << "Map contains: " << std::endl;
+	for (std::map<char, int>::iterator it = mymap6stl.begin(); it != mymap6stl.end(); it++)
+		file2 << it->first << " => " << it->second << std::endl;
+	file2 << "Size of the map: " << mymap6stl.size() << std::endl;
+	file2 << "Max size of the map: " << mymap6stl.max_size() << std::endl;
+	file2 << "Erase all elements of the map" << std::endl;
+	mymap6stl.erase(mymap6stl.begin(), mymap6stl.end());
+	file2 << "Size of the map: " << mymap6stl.size() << std::endl;
+	file2 << "Max size of the map: " << mymap6stl.max_size() << std::endl;
+	file2 << std::endl;
+
+	if (compare_files("CAPACITY TESTS: SIZE()", 0) == 0)
+		resize_files(file, file2);
+	
+
+	/* CAPACITY TESTS: MAX_SIZE() MY MAP */
+	ft::map<char, int> mymap7;
+
+	file << "CAPACITY TESTS: MAX_SIZE()" << std::endl;
+	file << "Assign 1000 elements in the vector" << std::endl;
+	if (mymap7.max_size() > 1000) {
+		for (int i = 0; i < 1000; i++)
+			mymap7[i] = i;
+		file << "The map contains 1000 elements" << std::endl;
+	} else {
+		file << "The map can't contain 1000 elements" << std::endl;
+	}
+	file << "Max size of the map: " << mymap7.max_size() << std::endl;
+	file << "Size of the map: " << mymap7.size() << std::endl;
+	file << std::endl;
+
+	/* CAPACITY TESTS: MAX_SIZE() STL MAP */
+	std::map<char, int> mymap7stl;
+
+	file2 << "CAPACITY TESTS: MAX_SIZE()" << std::endl;
+	file2 << "Assign 1000 elements in the vector" << std::endl;
+	if (mymap7stl.max_size() > 1000) {
+		for (int i = 0; i < 1000; i++)
+			mymap7stl[i] = i;
+		file2 << "The map contains 1000 elements" << std::endl;
+	} else {
+		file2 << "The map can't contain 1000 elements" << std::endl;
+	}
+	file2 << "Max size of the map: " << mymap7stl.max_size() << std::endl;
+	file2 << "Size of the map: " << mymap7stl.size() << std::endl;
+	file2 << std::endl;
+
+	if (compare_files("CAPACITY TESTS: MAX_SIZE()", 0) == 0)
+		resize_files(file, file2);
+
+	/* ELEMENT ACCESS TESTS: OPERATOR[] MY MAP */
+	ft::map<char, std::string> mymap8;
+
+	file << "ELEMENT ACCESS TESTS: OPERATOR[]" << std::endl;
+	file << "Assign 5 elements in the map" << std::endl;
+	mymap8['a'] = "an element";
+	mymap8['b'] = "another element";
+	mymap8['c'] = "yet another element";
+	mymap8['d'] = mymap8['a'];
+	mymap8['e'] = mymap8['c'];
+	file << "Map contains: " << std::endl;
+	for (ft::map<char, std::string>::iterator it = mymap8.begin(); it != mymap8.end(); it++)
+		file << it->first << " => " << it->second << std::endl;
+	file << "map['a'] = " << mymap8['a'] << std::endl;
+	file << "map['b'] = " << mymap8['b'] << std::endl;
+	file << "map['c'] = " << mymap8['c'] << std::endl;
+	file << "map['d'] = " << mymap8['d'] << std::endl;
+	file << "map['e'] = " << mymap8['e'] << std::endl;
+
+	file << "Map contains " << mymap8.size() << " elements" << std::endl;
+	file << std::endl;
+
+	/* ELEMENT ACCESS TESTS: OPERATOR[] STL MAP */
+	std::map<char, std::string> mymap8stl;
+
+	file2 << "ELEMENT ACCESS TESTS: OPERATOR[]" << std::endl;
+	file2 << "Assign 5 elements in the map" << std::endl;
+	mymap8stl['a'] = "an element";
+	mymap8stl['b'] = "another element";
+	mymap8stl['c'] = "yet another element";
+	mymap8stl['d'] = mymap8stl['a'];
+	mymap8stl['e'] = mymap8stl['c'];
+	file2 << "Map contains: " << std::endl;
+	for (std::map<char, std::string>::iterator it = mymap8stl.begin(); it != mymap8stl.end(); it++)
+		file2 << it->first << " => " << it->second << std::endl;
+	file2 << "map['a'] = " << mymap8stl['a'] << std::endl;
+	file2 << "map['b'] = " << mymap8stl['b'] << std::endl;
+	file2 << "map['c'] = " << mymap8stl['c'] << std::endl;
+	file2 << "map['d'] = " << mymap8stl['d'] << std::endl;
+	file2 << "map['e'] = " << mymap8stl['e'] << std::endl;
+
+	file2 << "Map contains " << mymap8stl.size() << " elements" << std::endl;
+	file2 << std::endl;
+
+	if (compare_files("ELEMENT ACCESS TESTS: OPERATOR[]", 0) == 0)
+		resize_files(file, file2);
+	
+
+	/* MODIFIERS TESTS: INSERT MY MAP */
+	
+
 
 
 

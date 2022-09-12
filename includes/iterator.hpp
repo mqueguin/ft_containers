@@ -24,7 +24,7 @@ namespace ft {
 			iterator(void): _ptr(NULL) {};
 			iterator(pointer ptr): _ptr(ptr) {};
 			iterator(const iterator &copy) { *this = copy; }
-			~iterator(void) {};
+			virtual ~iterator(void) {};
 
 			pointer base(void) const {
 				return (_ptr);
@@ -130,9 +130,9 @@ namespace ft {
 				return (_ptr[n]);
 			}
 			/* FIN OVERLOAD OPERATOR */
-			operator    iterator<std::random_access_iterator_tag, const value_type>() const
+			operator    iterator<ft::random_access_iterator_tag, const value_type>() const
 			{
-				return iterator<std::random_access_iterator_tag, const value_type>(_ptr);
+				return iterator<ft::random_access_iterator_tag, const value_type>(_ptr);
 			}
 			friend iterator operator+(int n, const iterator& it)
 			{
