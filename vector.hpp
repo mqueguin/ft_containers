@@ -204,8 +204,9 @@ namespace ft {
 			}
 			
 			void reserve(size_type n) {
-				if (n > this->max_size())
+				if (n > this->max_size()) {
 					throw std::length_error("vector::reserve");
+				}
 				if (n > _capacity) {
 					T *tmp = _default_allocator_type.allocate(n);
 					for (size_type i = 0; i < _size; i++)

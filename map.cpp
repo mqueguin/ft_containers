@@ -442,9 +442,8 @@ int ft_map(void) {
 	file << "Assign 5 elements in the map" << std::endl;
 	mymap8['a'] = "an element";
 	mymap8['b'] = "another element";
-	mymap8['c'] = "yet another element";
-	mymap8['d'] = mymap8['a'];
-	mymap8['e'] = mymap8['c'];
+	mymap8['c'] = mymap8['a'];
+	mymap8['d'] = mymap8['b'];
 	file << "Map contains: " << std::endl;
 	for (ft::map<char, std::string>::iterator it = mymap8.begin(); it != mymap8.end(); it++)
 		file << it->first << " => " << it->second << std::endl;
@@ -464,9 +463,8 @@ int ft_map(void) {
 	file2 << "Assign 5 elements in the map" << std::endl;
 	mymap8stl['a'] = "an element";
 	mymap8stl['b'] = "another element";
-	mymap8stl['c'] = "yet another element";
-	mymap8stl['d'] = mymap8stl['a'];
-	mymap8stl['e'] = mymap8stl['c'];
+	mymap8stl['c'] = mymap8stl['a'];
+	mymap8stl['d'] = mymap8stl['b'];
 	file2 << "Map contains: " << std::endl;
 	for (std::map<char, std::string>::iterator it = mymap8stl.begin(); it != mymap8stl.end(); it++)
 		file2 << it->first << " => " << it->second << std::endl;

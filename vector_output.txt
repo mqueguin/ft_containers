@@ -1,0 +1,308 @@
+CONSTRUCTORS TESTS
+Create empty vector: 0
+Create vector with 4 ints with value 100: 4
+and his content: 100 100 100 100 
+Create vector with iterator: 4
+and his content: 100 100 100 100 
+Create vector with copy constructor: 4
+and his content: 100 100 100 100 
+Create vector with array: 4
+The contents of fifth are: 16 2 77 29
+
+OPERATOR= TESTS
+Create vector foo with 3 ints with value 0: 3
+foo content: 0 0 0 
+Create vector bar with 5 ints with value 0: 5
+bar content: 0 0 0 0 0 
+Assign bar to foo
+foo content: 0 0 0 0 0 
+Assign empty vector to bar
+Size of bar: 0
+Size of foo: 5
+
+ITERATORS TESTS BEGIN()
+Push back: 1
+Push back: 2
+Push back: 3
+Push back: 4
+Push back: 5
+myvector contains: 1 2 3 4 5
+Valeur de begin(): 1
+Valeur de begin() + 3: 4
+
+ITERATORS TESTS END()
+Push back: 1
+Push back: 2
+Push back: 3
+Push back: 4
+Push back: 5
+Push back: 6
+Push back: 7
+Push back: 8
+myvector contains: 1 2 3 4 5 6 7 8
+Valeur de end() - 3: 6
+Valeur de end() - 7: 2
+Valeur de end() - begin(): 8
+
+ITERATORS TESTS RBEGIN()
+Push back: 1
+Push back: 2
+Push back: 3
+Push back: 4
+Push back: 5
+myvector contains: 5 4 3 2 1
+Valeur de rbegin(): 5
+Valeur de rbegin() + 3: 2
+
+ITERATORS TESTS REND()
+Push back: 1
+Push back: 2
+Push back: 3
+Push back: 4
+Push back: 5
+myvector contains: 5 4 3 2 1
+Valeur de rend() + 3: 0
+Valeur de rend() + 7: 96
+Valeur de rend() - rbegin(): 5
+
+ITERATORS TESTS CONST ITERATOR
+Push back: 1
+Push back: 2
+Push back: 3
+Push back: 4
+Push back: 5
+myvector contains: 1 2 3 4 5
+Valeur de begin(): 1
+Valeur de begin() + 3: 4
+
+ITERATORS TESTS CONST REVERSE ITERATOR
+Push back: 1
+Push back: 2
+Push back: 3
+Push back: 4
+Push back: 5
+myvector contains: 5 4 3 2 1
+Valeur de rend() + 3: 0
+Valeur de rend() + 7: 96
+Valeur de rend() - rbegin(): 5
+
+CAPACITY TESTS SIZE
+0. size: 0
+Push back: 0
+1. size: 1
+Push back: 1
+1. size: 2
+Push back: 2
+1. size: 3
+Push back: 3
+1. size: 4
+Push back: 4
+1. size: 5
+Push back: 5
+1. size: 6
+Push back: 6
+1. size: 7
+Push back: 7
+1. size: 8
+Push back: 8
+1. size: 9
+Push back: 9
+1. size: 10
+Vector contains: 0 1 2 3 4 5 6 7 8 9
+insert(end(), 10, 100):  0 1 2 3 4 5 6 7 8 9 100 100 100 100 100 100 100 100 100 100
+2. size: 20
+
+Pop back
+Vector contains: 0 1 2 3 4 5 6 7 8 9 100 100 100 100 100 100 100 100 100
+3. size: 19
+
+CAPACITY TESTS MAX SIZE
+Max size: 2305843009213693951
+Push back 100 elements in the vector
+Max size: 2305843009213693951
+Size: 100
+Capacity: 128
+
+CAPACITY TESTS RESIZE
+Add 10 elements in the vector
+Size: 10
+Resize to 5
+Vector contains:  0 1 2 3 4
+Size: 5
+Resize to 8, 100
+Vector contains:  0 1 2 3 4 100 100 100
+Size: 8
+Resize to 12
+Vector contains:  0 1 2 3 4 100 100 100 0 0 0 0
+Size: 12
+Capacity: 16
+Max size: 2305843009213693951
+
+CAPACITY TESTS RESERVE
+Add 10 elements in the vector
+Size: 10
+Capacity: 16
+Reserve 50
+Vector contains:  0 1 2 3 4 5 6 7 8 9
+Size: 10
+Capacity: 50
+Reserve 5
+Vector contains:  0 1 2 3 4 5 6 7 8 9
+Size: 10
+Capacity: 50
+
+CAPACITY TESTS EMPTY
+Test if the vector is empty
+Vector is empty
+Add 10 elements in the vector
+Test if the vector is empty
+Vector is not empty
+Pop back 10 elements
+Test if the vector is empty
+Vector is empty
+Size: 0
+Capacity: 16
+
+CAPACITY TESTS RESERVE
+making fooreserve grow:
+Add 100 elements in the vector fooreserve
+capacity changed: 1
+capacity changed: 2
+capacity changed: 4
+capacity changed: 8
+capacity changed: 16
+capacity changed: 32
+capacity changed: 64
+capacity changed: 128
+Size: 100
+Capacity: 128
+Vector contains:  0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99
+making barreserve grow:
+Add 100 elements in the vector barreserve
+capacity changed: 100
+Size: 100
+Capacity: 100
+Vector contains:  0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99
+
+ELEMENT ACCESS TESTS OPERATOR[]
+Assign some values in vector
+Vector contains:  0 1 2 3 4 5 6 7 8 9
+Size: 10
+Capacity: 10
+Reverse vector using operator[]
+Vector contains:  9 8 7 6 5 4 3 2 1 0
+Size: 10
+Capacity: 10
+
+ELEMENT ACCESS TESTS AT
+Assign some values in vector
+Vector contains (with at()):  0 1 2 3 4 5 6 7 8 9
+Size: 10
+Capacity: 10
+Access with at(20) (out of range)
+Exception: vector::_M_range_check: __n (which is 20) >= this->size() (which is 10)
+
+ELEMENT ACCESS TESTS FRONT
+Push back 78 in vector
+Vector contains:  78Front: 78
+Size: 1
+Capacity: 1
+Push back 16 in vector
+Vector contains:  78 16Front: 78
+Size: 2
+Capacity: 2
+Front -= back
+Front() is now 62
+
+ELEMENT ACCESS TESTS BACK
+Push back 10 in vector
+Vector contains:  10
+Back: 10
+Size: 1
+Capacity: 1
+While vector.back() != 0 push back back() -1
+Vector contains:  10 9 8 7 6 5 4 3 2 1 0
+Back: 0
+Size: 11
+Capacity: 16
+
+MODIFIERS TESTS ASSIGN
+Assign 7 ints with value 100 in the first vector
+First vector contains:  100 100 100 100 100 100 100
+Assign range from first to last in the second vector
+Second vector contains:  100 100 100 100 100
+Assign array of 3 ints in the third vector
+Third vector contains:  1776 7 4
+Size of first vector: 7
+Size of second vector: 5
+Size of third vector: 3
+
+MODIFIERS TESTS PUSH BACK
+Size of vector: 0
+Push back 100
+Size of vector: 1
+Push back 150 elements
+Size of vector: 151
+Vector contains:  100 0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46 47 48 49 50 51 52 53 54 55 56 57 58 59 60 61 62 63 64 65 66 67 68 69 70 71 72 73 74 75 76 77 78 79 80 81 82 83 84 85 86 87 88 89 90 91 92 93 94 95 96 97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112 113 114 115 116 117 118 119 120 121 122 123 124 125 126 127 128 129 130 131 132 133 134 135 136 137 138 139 140 141 142 143 144 145 146 147 148 149
+Capacity of vector: 256
+
+MODIFIERS TESTS POP BACK
+Size of vector: 0
+Push back 15 elements
+Size of vector: 15
+Vector contains:  0 1 2 3 4 5 6 7 8 9 10 11 12 13 14
+Pop back 5 elements
+Size of vector: 10
+Vector contains:  0 1 2 3 4 5 6 7 8 9
+Sum of elements: The elements of vector add up to: 45
+
+MODIFIERS TESTS INSERT
+Vector contains: 501 502 503 300 300 400 400 200 100 100 100
+Size of vector: 11
+Capacity of vector: 12
+Max size of vector: 2305843009213693951
+
+MODIFIERS TESTS ERASE
+Push back 10 elements in the vector
+Vector contains:  1 2 3 4 5 6 7 8 9 10
+Size of vector: 10
+Capacity of vector: 16
+Max size of vector: 2305843009213693951
+Erase the 6th element
+Vector contains:  1 2 3 4 5 7 8 9 10
+Size of vector: 9
+Capacity of vector: 16
+Max size of vector: 2305843009213693951
+Erase the first 3 elements
+Vector contains:  4 5 7 8 9 10
+Size of vector: 6
+Capacity of vector: 16
+Max size of vector: 2305843009213693951
+
+MODIFIERS TESTS SWAP
+myvectorswap1 contains: 100 100 100
+myvectorswap2 contains: 200 200 200 200 200
+myvectorswap1.swap(myvectorswap2);
+myvectorswap1 contains: 200 200 200 200 200
+myvectorswap2 contains: 100 100 100
+
+MODIFIERS TESTS CLEAR
+Push back 100, 200, 300
+Vector contains:
+Size of vector: 0
+Capacity of vector: 0
+Max size of vector: 2305843009213693951
+Clear the vector
+Push back 1042, 3022
+Vector contains: 1042 3022
+Size of vector: 2
+Capacity of vector: 2
+Max size of vector: 2305843009213693951
+
+RELATIONAL OPERATOR TESTS
+myvectorrel1 contains: 100 100 100
+myvectorrel2 contains: 200 200
+myvectorrel1 and myvectorrel2 are not equal
+myvectorrel1 is less than myvectorrel2
+myvectorrel1 is less than or equal to myvectorrel2
+

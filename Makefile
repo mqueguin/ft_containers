@@ -31,7 +31,7 @@ OBJ			=	$(addprefix $(OBJ_DIR)/, $(SRC:%.cpp=%.o))
 
 # Compilation flags -------------------------------------------------
 
-CPPFLAGS			=	-Wall -Wextra -Werror -std=c++98
+CPPFLAGS			=	-Wall -Wextra -Werror -std=c++98 -g3
 IFLAGS			=	-I includes/ -I /usr/include
 
 # Colors ------------------------------------------------------------

@@ -177,7 +177,6 @@ int ft_vector(void) {
   	file << std::endl;
 	file << "Valeur de begin(): " << *myvector.begin() << std::endl;
 	file << "Valeur de begin() + 3: " << *(myvector.begin() + 3) << std::endl;
-	file << "Valeur de begin() + 7: " << *(myvector.begin() + 7) << " It's out of the vector" << std::endl;
 	file << std::endl;
 
 
@@ -195,7 +194,6 @@ int ft_vector(void) {
   	file2 << std::endl;
 	file2 << "Valeur de begin(): " << *myvectorstl.begin() << std::endl;
 	file2 << "Valeur de begin() + 3: " << *(myvectorstl.begin() + 3) << std::endl;
-	file2 << "Valeur de begin() + 7: " << *(myvectorstl.begin() + 7) << " It's out of the vector" << std::endl;
 	file2 << std::endl;
 
 	if (compare_files("ITERATORS TESTS BEGIN()", 0, "vector") == 0)
@@ -214,7 +212,6 @@ int ft_vector(void) {
   	for (ft::vector<int>::iterator it = myvector2.begin() ; it != myvector2.end(); ++it)
 		file << ' ' << *it;
   	file << std::endl;
-	file << "Valeur de end(): " << *myvector2.end() << " It's out of the vector" << std::endl;
 	file << "Valeur de end() - 3: " << *(myvector2.end() - 3) << std::endl;
 	file << "Valeur de end() - 7: " << *(myvector2.end() - 7) << std::endl;
 	file << "Valeur de end() - begin(): " << myvector2.end() - myvector2.begin() << std::endl;
@@ -233,7 +230,6 @@ int ft_vector(void) {
   	for (std::vector<int>::iterator it = myvectorstl2.begin() ; it != myvectorstl2.end(); ++it)
 		file2 << ' ' << *it;
   	file2 << std::endl;
-	file2 << "Valeur de end(): " << *myvectorstl2.end() << " It's out of the vector" << std::endl;
 	file2 << "Valeur de end() - 3: " << *(myvectorstl2.end() - 3) << std::endl;
 	file2 << "Valeur de end() - 7: " << *(myvectorstl2.end() - 7) << std::endl;
 	file2 << "Valeur de end() - begin(): " << myvectorstl2.end() - myvectorstl2.begin() << std::endl;
@@ -257,7 +253,6 @@ int ft_vector(void) {
   	file << std::endl;
 	file << "Valeur de rbegin(): " << *myvector3.rbegin() << std::endl;
 	file << "Valeur de rbegin() + 3: " << *(myvector3.rbegin() + 3) << std::endl;
-	file << "Valeur de rbegin() + 7: " << *(myvector3.rbegin() + 7) << " It's out of the vector" << std::endl;
 	file << std::endl;
 
 
@@ -275,7 +270,6 @@ int ft_vector(void) {
   	file2 << std::endl;
 	file2 << "Valeur de rbegin(): " << *myvectorstl3.rbegin() << std::endl;
 	file2 << "Valeur de rbegin() + 3: " << *(myvectorstl3.rbegin() + 3) << std::endl;
-	file2 << "Valeur de rbegin() + 7: " << *(myvectorstl3.rbegin() + 7) << " It's out of the vector" << std::endl;
 	file2 << std::endl;
 
 	if (compare_files("ITERATORS TESTS RBEGIN()", 0, "vector") == 0)
@@ -294,7 +288,6 @@ int ft_vector(void) {
   	for (ft::vector<int>::reverse_iterator it = myvector4.rbegin() ; it != myvector4.rend(); ++it)
 		file << ' ' << *it;
   	file << std::endl;
-	file << "Valeur de rend(): " << *myvector4.rend() << " It's out of the vector" << std::endl;
 	file << "Valeur de rend() + 3: " << *(myvector4.rend() + 3) << std::endl;
 	file << "Valeur de rend() + 7: " << *(myvector4.rend() + 7) << std::endl;
 	file << "Valeur de rend() - rbegin(): " << myvector4.rend() - myvector4.rbegin() << std::endl;
@@ -313,7 +306,6 @@ int ft_vector(void) {
   	for (std::vector<int>::reverse_iterator it = myvectorstl4.rbegin() ; it != myvectorstl4.rend(); ++it)
 		file2 << ' ' << *it;
   	file2 << std::endl;
-	file2 << "Valeur de rend(): " << *myvectorstl4.rend() << " It's out of the vector" << std::endl;
 	file2 << "Valeur de rend() + 3: " << *(myvectorstl4.rend() + 3) << std::endl;
 	file2 << "Valeur de rend() + 7: " << *(myvectorstl4.rend() + 7) << std::endl;
 	file2 << "Valeur de rend() - rbegin(): " << myvectorstl4.rend() - myvectorstl4.rbegin() << std::endl;
@@ -337,7 +329,6 @@ int ft_vector(void) {
   	file << std::endl;
 	file << "Valeur de begin(): " << *myvector5.begin() << std::endl;
 	file << "Valeur de begin() + 3: " << *(myvector5.begin() + 3) << std::endl;
-	file << "Valeur de begin() + 7: " << *(myvector5.begin() + 7) << " It's out of the vector" << std::endl;
 	file << std::endl;
 
 
@@ -355,7 +346,6 @@ int ft_vector(void) {
   	file2 << std::endl;
 	file2 << "Valeur de begin(): " << *myvectorstl5.begin() << std::endl;
 	file2 << "Valeur de begin() + 3: " << *(myvectorstl5.begin() + 3) << std::endl;
-	file2 << "Valeur de begin() + 7: " << *(myvectorstl5.begin() + 7) << " It's out of the vector" << std::endl;
 	file2 << std::endl;
 
 	if (compare_files("ITERATORS TESTS CONST ITERATOR", 0, "vector") == 0)
@@ -374,7 +364,6 @@ int ft_vector(void) {
   	for (ft::vector<int>::const_reverse_iterator it = myvector6.rbegin() ; it != myvector6.rend(); ++it)
 		file << ' ' << *it;
   	file << std::endl;
-	file << "Valeur de rend(): " << *myvector6.rend() << " It's out of the vector" << std::endl;
 	file << "Valeur de rend() + 3: " << *(myvector6.rend() + 3) << std::endl;
 	file << "Valeur de rend() + 7: " << *(myvector6.rend() + 7) << std::endl;
 	file << "Valeur de rend() - rbegin(): " << myvector6.rend() - myvector6.rbegin() << std::endl;
@@ -393,7 +382,6 @@ int ft_vector(void) {
   	for (std::vector<int>::const_reverse_iterator it = myvectorstl6.rbegin() ; it != myvectorstl6.rend(); ++it)
 		file2 << ' ' << *it;
   	file2 << std::endl;	
-	file2 << "Valeur de rend(): " << *myvectorstl6.rend() << " It's out of the vector" << std::endl;
 	file2 << "Valeur de rend() + 3: " << *(myvectorstl6.rend() + 3) << std::endl;
 	file2 << "Valeur de rend() + 7: " << *(myvectorstl6.rend() + 7) << std::endl;
 	file2 << "Valeur de rend() - rbegin(): " << myvectorstl6.rend() - myvectorstl6.rbegin() << std::endl;
@@ -856,7 +844,6 @@ int ft_vector(void) {
 
 	if (compare_files("ELEMENT ACCESS TESTS OPERATOR[]", 0, "vector") == 0)
 		resize_files(file, file2, "vector");
-
 	
 	/* ELEMENT ACCESS TESTS: AT MY VECTOR */
 	ft::vector<int> myvectorat(10);  // 10 zero-initialized ints
