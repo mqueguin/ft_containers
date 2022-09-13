@@ -1169,7 +1169,115 @@ int main(void) {
 		resize_files(file, file2);
 	
 	/* OPERATIONS TESTS: EQUAL_RANGE() */
+	ft::map<char, int> mymap19;
+
+	file << "OPERATIONS TESTS: EQUAL_RANGE()" << std::endl;
+	file << "Add some values in map" << std::endl;
+	mymap19['a'] = 10;
+	mymap19['b'] = 20;
+	mymap19['c'] = 30;
+
+	file << "Map contains: " << std::endl;
+	for (ft::map<char, int>::iterator it = mymap19.begin(); it != mymap19.end(); it++)
+		file << it->first << " => " << it->second << std::endl;
+	ft::pair<ft::map<char, int>::iterator, ft::map<char, int>::iterator> ret19;
+	ret19 = mymap19.equal_range('b');
+
+	file << "lower bound points to: ";
+	file << ret19.first->first << " => " << ret19.first->second << std::endl;
+
+	file << "upper bound points to: ";
+	file << ret19.second->first << " => " << ret19.second->second << std::endl;
+	file << std::endl;
+
+	/* OPERATIONS TESTS: EQUAL_RANGE() STL MAP */
+	std::map<char, int> mymap19stl;
+
+	file2 << "OPERATIONS TESTS: EQUAL_RANGE()" << std::endl;
+	file2 << "Add some values in map" << std::endl;
+	mymap19stl['a'] = 10;
+	mymap19stl['b'] = 20;
+	mymap19stl['c'] = 30;
+
+	file2 << "Map contains: " << std::endl;
+	for (std::map<char, int>::iterator it = mymap19stl.begin(); it != mymap19stl.end(); it++)
+		file2 << it->first << " => " << it->second << std::endl;
+	std::pair<std::map<char, int>::iterator, std::map<char, int>::iterator> ret19stl;
+	ret19stl = mymap19stl.equal_range('b');
+
+	file2 << "lower bound points to: ";
+	file2 << ret19stl.first->first << " => " << ret19stl.first->second << std::endl;
+
+	file2 << "upper bound points to: ";
+	file2 << ret19stl.second->first << " => " << ret19stl.second->second << std::endl;
+	file2 << std::endl;
+
+	if (compare_files("OPERATIONS TESTS: EQUAL_RANGE()", 0) == 0)
+		resize_files(file, file2);
 	
+	/* RELATIONAL OPERATORS TESTS */
+	ft::map<char,int> foo20, bar20;
+	
+	file << "RELATIONAL OPERATORS TESTS" << std::endl;
+	foo20['a'] = 100;
+	foo20['b'] = 200;
+	bar20['a'] = 10;
+	bar20['z'] = 1000;
 
+	file << "Map foo contains: " << std::endl;
+	for (ft::map<char, int>::iterator it = foo20.begin(); it != foo20.end(); it++)
+		file << it->first << " => " << it->second << std::endl;
+	file << "Map bar contains: " << std::endl;
+	for (ft::map<char, int>::iterator it = bar20.begin(); it != bar20.end(); it++)
+		file << it->first << " => " << it->second << std::endl;
+	
+	if (foo20 == bar20)
+		file << "foo and bar are equal" << std::endl;
+	if (foo20 != bar20)
+		file << "foo and bar are not equal" << std::endl;
+	if (foo20 < bar20)
+		file << "foo is less than bar" << std::endl;
+	if (foo20 > bar20)
+		file << "foo is greater than bar" << std::endl;
+	if (foo20 <= bar20)
+		file << "foo is less than or equal to bar" << std::endl;
+	if (foo20 >= bar20)
+		file << "foo is greater than or equal to bar" << std::endl;
+	file << std::endl;
 
+	/* RELATIONAL OPERATORS TESTS STL MAP */
+	std::map<char,int> foostl20, barstl20;
+
+	file2 << "RELATIONAL OPERATORS TESTS" << std::endl;
+	foostl20['a'] = 100;
+	foostl20['b'] = 200;
+	barstl20['a'] = 10;
+	barstl20['z'] = 1000;
+
+	file2 << "Map foo contains: " << std::endl;
+	for (std::map<char, int>::iterator it = foostl20.begin(); it != foostl20.end(); it++)
+		file2 << it->first << " => " << it->second << std::endl;
+	file2 << "Map bar contains: " << std::endl;
+	for (std::map<char, int>::iterator it = barstl20.begin(); it != barstl20.end(); it++)
+		file2 << it->first << " => " << it->second << std::endl;
+	
+	if (foostl20 == barstl20)
+		file2 << "foo and bar are equal" << std::endl;
+	if (foostl20 != barstl20)
+		file2 << "foo and bar are not equal" << std::endl;
+	if (foostl20 < barstl20)
+		file2 << "foo is less than bar" << std::endl;
+	if (foostl20 > barstl20)
+		file2 << "foo is greater than bar" << std::endl;
+	if (foostl20 <= barstl20)
+		file2 << "foo is less than or equal to bar" << std::endl;
+	if (foostl20 >= barstl20)
+		file2 << "foo is greater than or equal to bar" << std::endl;
+	file2 << std::endl;
+
+	if (compare_files("RELATIONAL OPERATORS TESTS", 0) == 0)
+		resize_files(file, file2);
+	
+	std::cout << std::endl;
+	std::cout << BOLD "================ " NC CYN "MAP TESTS FINISHED" NC BOLD " ================" << std::endl;
 }

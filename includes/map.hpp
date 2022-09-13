@@ -39,7 +39,7 @@ namespace ft
 			typedef typename allocator_type::template rebind< rb_tree_node< value_type > >::other node_allocator_type;
 
 		public:
-			class are
+			class value_compare
 			{
 				friend class map<Key, T, Compare, Allocator>;
 				public:
