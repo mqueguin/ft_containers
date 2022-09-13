@@ -2,7 +2,8 @@
 #include <deque>
 #include <fstream>
 #include <iostream>
-#include "includes/vector.hpp"
+#include "vector.hpp"
+#include "tester.hpp"
 
 #define NC "\e[0m"
 #define BOLD "\e[1m"
@@ -12,45 +13,7 @@
 #define YEL "\e[1;33m"
 #define REDB "\e[41m"
 
-
-int	compare_files(const std::string &test, bool is_out_of_range) {
-	std::ifstream file("my_vector_output.txt", std::ifstream::binary|std::ifstream::ate);
-	std::ifstream file2("vector_output.txt", std::ifstream::binary|std::ifstream::ate);
-
-	if (file.fail() || file2.fail()) {
-		std::cout << REDB << "Error: " << NC << "Can't open file" << (file.fail() ? "my_vector_output.txt" : "vector_output.txt") << std::endl;
-		return (2);
-	}
-
-	if (is_out_of_range) {
-		std::cout << " " BOLD << test << ":" NC " " GRN "OK " NC YEL "(output differs because throw error is not the same)" NC << std::endl;
-		return (0);
-	}
-
-	if (file.tellg() != file2.tellg()) {
-		std::cout << " " BOLD << test << ":" NC " " RED "KO (output differs)" NC << std::endl;
-		return (0);
-	}
-
-	std::cout << " " BOLD << test << ":" NC " " GRN "OK" NC << std::endl;
-	return (1);
-}
-
-void	resize_files(std::ofstream &file, std::ofstream &file2) {
-	std::ifstream read("my_vector_output.txt", std::ifstream::binary|std::ifstream::ate);
-	std::ifstream read2("vector_output.txt", std::ifstream::binary|std::ifstream::ate);
-	if (read.tellg() > read2.tellg()) {
-		for (int i = 0; i < (read.tellg() - read2.tellg()) - 1; i++)
-			file2 << " ";
-		file2 << std::endl;
-	} else {
-		for (int i = 0; i < (read2.tellg() - read.tellg()) - 1; i++)
-			file << " ";
-		file << std::endl;
-	}
-}
-
-int main(void) {
+int ft_vector(void) {
 
 	std::string filename("my_vector_output.txt");
 	std::ofstream file(filename.c_str());
@@ -140,8 +103,8 @@ int main(void) {
   	file2 << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("CONSTRUCTORS TEST", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("CONSTRUCTORS TEST", 0, "vector") == 0)
+		resize_files(file, file2, "vector");
 	
 	/* OPERATOR= TESTS MY VECTOR */
 	ft::vector<int> foo (3,0);
@@ -197,8 +160,8 @@ int main(void) {
 	file2 << "Size of foo: " << foostl.size() << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("OPERATOR= TEST", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("OPERATOR= TEST", 0, "vector") == 0)
+		resize_files(file, file2, "vector");
 
 	/* ITERATORS TESTS: BEGIN() MY VECTOR */
 	ft::vector<int> myvector;
@@ -235,8 +198,8 @@ int main(void) {
 	file2 << "Valeur de begin() + 7: " << *(myvectorstl.begin() + 7) << " It's out of the vector" << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("ITERATORS TESTS BEGIN()", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("ITERATORS TESTS BEGIN()", 0, "vector") == 0)
+		resize_files(file, file2, "vector");
 
 
 	/* ITERATORS TESTS: END() MY VECTOR */
@@ -276,8 +239,8 @@ int main(void) {
 	file2 << "Valeur de end() - begin(): " << myvectorstl2.end() - myvectorstl2.begin() << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("ITERATORS TESTS END()", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("ITERATORS TESTS END()", 0, "vector") == 0)
+		resize_files(file, file2, "vector");
 
 	
 	/* ITERATORS TESTS: RBEGIN() MY VECTOR */
@@ -315,8 +278,8 @@ int main(void) {
 	file2 << "Valeur de rbegin() + 7: " << *(myvectorstl3.rbegin() + 7) << " It's out of the vector" << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("ITERATORS TESTS RBEGIN()", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("ITERATORS TESTS RBEGIN()", 0, "vector") == 0)
+		resize_files(file, file2, "vector");
 
 	
 	/* ITERATORS TESTS: REND() MY VECTOR */
@@ -356,8 +319,8 @@ int main(void) {
 	file2 << "Valeur de rend() - rbegin(): " << myvectorstl4.rend() - myvectorstl4.rbegin() << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("ITERATORS TESTS REND()", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("ITERATORS TESTS REND()", 0, "vector") == 0)
+		resize_files(file, file2, "vector");
 
 
 	/* ITERATORS TESTS: CONST ITERATOR MY VECTOR */
@@ -395,8 +358,8 @@ int main(void) {
 	file2 << "Valeur de begin() + 7: " << *(myvectorstl5.begin() + 7) << " It's out of the vector" << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("ITERATORS TESTS CONST ITERATOR", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("ITERATORS TESTS CONST ITERATOR", 0, "vector") == 0)
+		resize_files(file, file2, "vector");
 
 
 	/* ITERATORS TESTS: CONST REVERSE ITERATOR MY VECTOR */
@@ -436,8 +399,8 @@ int main(void) {
 	file2 << "Valeur de rend() - rbegin(): " << myvectorstl6.rend() - myvectorstl6.rbegin() << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("ITERATORS TESTS CONST REVERSE ITERATOR", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("ITERATORS TESTS CONST REVERSE ITERATOR", 0, "vector") == 0)
+		resize_files(file, file2, "vector");
 
 
 	/* CAPACITY TESTS: SIZE MY VECTOR */
@@ -505,8 +468,8 @@ int main(void) {
 	file2 << "3. size: " << myintssize2.size() << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("CAPACITY TESTS SIZE", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("CAPACITY TESTS SIZE", 0, "vector") == 0)
+		resize_files(file, file2, "vector");
 
 
 	/* CAPACITY TESTS: MAX SIZE MY VECTOR */
@@ -536,8 +499,8 @@ int main(void) {
 	file2 << "Capacity: " << myvectorstl8.capacity() << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("CAPACITY TESTS MAX SIZE", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("CAPACITY TESTS MAX SIZE", 0, "vector") == 0)
+		resize_files(file, file2, "vector");
 
 	
 	/* CAPACITY TESTS: RESIZE MY VECTOR */
@@ -609,8 +572,8 @@ int main(void) {
 	file2 << "Max size: " << myvectorstl9.max_size() << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("CAPACITY TESTS RESIZE", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("CAPACITY TESTS RESIZE", 0, "vector") == 0)
+		resize_files(file, file2, "vector");
 
 	
 	/* CAPACITY TESTS: RESERVE MY VECTOR */
@@ -668,8 +631,8 @@ int main(void) {
 	file2 << "Capacity: " << myvectorstl10.capacity() << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("CAPACITY TESTS RESERVE", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("CAPACITY TESTS RESERVE", 0, "vector") == 0)
+		resize_files(file, file2, "vector");
 
 	
 	/* CAPACITY TESTS: EMPTY MY VECTOR */
@@ -731,8 +694,8 @@ int main(void) {
 	file2 << "Capacity: " << myvectorstl11.capacity() << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("CAPACITY TESTS EMPTY", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("CAPACITY TESTS EMPTY", 0, "vector") == 0)
+		resize_files(file, file2, "vector");
 
 
 	/* CAPACITY TESTS: RESERVE MY VECTOR */
@@ -819,8 +782,8 @@ int main(void) {
 	file2 << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("CAPACITY TESTS RESERVE", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("CAPACITY TESTS RESERVE", 0, "vector") == 0)
+		resize_files(file, file2, "vector");
 	
 
 	/* ELEMENT ACCESS TESTS: OPERATOR[] MY VECTOR */
@@ -891,8 +854,8 @@ int main(void) {
 	file2 << "Capacity: " << myvectoropstl.capacity() << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("ELEMENT ACCESS TESTS OPERATOR[]", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("ELEMENT ACCESS TESTS OPERATOR[]", 0, "vector") == 0)
+		resize_files(file, file2, "vector");
 
 	
 	/* ELEMENT ACCESS TESTS: AT MY VECTOR */
@@ -943,8 +906,8 @@ int main(void) {
 	}
 	file2 << std::endl;
 
-	if (compare_files("ELEMENT ACCESS TESTS AT", 1) == 0)
-		resize_files(file, file2);
+	if (compare_files("ELEMENT ACCESS TESTS AT", 1, "vector") == 0)
+		resize_files(file, file2, "vector");
 	
 
 	/* ELEMENT ACCESS TESTS: FRONT MY VECTOR */
@@ -1003,8 +966,8 @@ int main(void) {
 	file2 << "Front() is now " << myvectorfrontstl.front() << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("ELEMENT ACCESS TESTS FRONT", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("ELEMENT ACCESS TESTS FRONT", 0, "vector") == 0)
+		resize_files(file, file2, "vector");
 	
 
 	/* ELEMENT ACCESS TESTS: BACK MY VECTOR */
@@ -1065,8 +1028,8 @@ int main(void) {
 	file2 << "Capacity: " << myvectorbackstl.capacity() << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("ELEMENT ACCESS TESTS BACK", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("ELEMENT ACCESS TESTS BACK", 0, "vector") == 0)
+		resize_files(file, file2, "vector");
 
 	
 	/* MODIFIERS TESTS: ASSIGN MY VECTOR */
@@ -1142,8 +1105,8 @@ int main(void) {
 	file2 << "Size of third vector: " << thirdassignstl.size() << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("MODIFIERS TESTS ASSIGN", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("MODIFIERS TESTS ASSIGN", 0, "vector") == 0)
+		resize_files(file, file2, "vector");
 
 	
 	/* MODIFIERS TESTS: PUSH BACK MY VECTOR */
@@ -1188,8 +1151,8 @@ int main(void) {
 	file2 << "Capacity of vector: " << myvectorpushbackstl.capacity() << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("MODIFIERS TESTS PUSH BACK", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("MODIFIERS TESTS PUSH BACK", 0, "vector") == 0)
+		resize_files(file, file2, "vector");
 
 	
 	/* MODIFIERS TESTS: POP BACK MY VECTOR */
@@ -1260,8 +1223,8 @@ int main(void) {
 	file2 << "The elements of vector add up to: " << sum2 << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("MODIFIERS TESTS POP BACK", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("MODIFIERS TESTS POP BACK", 0, "vector") == 0)
+		resize_files(file, file2, "vector");
 	
 
 	/* MODIFIERS TESTS: INSERT MY VECTOR */
@@ -1320,8 +1283,8 @@ int main(void) {
 	file2 << "Max size of vector: " << myvectorinsertstl.max_size() << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("MODIFIERS TESTS INSERT", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("MODIFIERS TESTS INSERT", 0, "vector") == 0)
+		resize_files(file, file2, "vector");
 
 
 	/* MODIFIERS TESTS: ERASE MY VECTOR */
@@ -1408,8 +1371,8 @@ int main(void) {
 	file2 << "Max size of vector: " << myvectorerasestl.max_size() << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("MODIFIERS TESTS ERASE", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("MODIFIERS TESTS ERASE", 0, "vector") == 0)
+		resize_files(file, file2, "vector");
 	
 
 	/* MODIFIERS TESTS: SWAP MY VECTOR */
@@ -1470,8 +1433,8 @@ int main(void) {
 	file2 << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("MODIFIERS TESTS SWAP", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("MODIFIERS TESTS SWAP", 0, "vector") == 0)
+		resize_files(file, file2, "vector");
 	
 
 	/* MODIFIERS TESTS: CLEAR MY VECTOR */
@@ -1536,8 +1499,8 @@ int main(void) {
 	file2 << "Max size of vector: " << myvectorclearstl.max_size() << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("MODIFIERS TESTS CLEAR", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("MODIFIERS TESTS CLEAR", 0, "vector") == 0)
+		resize_files(file, file2, "vector");
 	
 
 	/* RELATIONAL OERATOR TESTS: MY VECTOR */
@@ -1598,9 +1561,10 @@ int main(void) {
 		file2 << "myvectorrel1 is greater than or equal to myvectorrel2" << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("RELATIONAL OPERATOR TESTS", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("RELATIONAL OPERATOR TESTS", 0, "vector") == 0)
+		resize_files(file, file2, "vector");
 	
 	std::cout << std::endl;
 	std::cout << BOLD "================ " NC CYN "VECTOR TESTS FINISHED" NC BOLD " ================" << std::endl;
+	return (1);
 }

@@ -1,10 +1,11 @@
-#include "includes/stack.hpp"
-#include "includes/vector.hpp"
+#include "stack.hpp"
+#include "vector.hpp"
 #include <stack>
 #include <vector>
 #include <deque>
 #include <fstream>
 #include <iostream>
+#include "tester.hpp"
 
 #define NC "\e[0m"
 #define BOLD "\e[1m"
@@ -14,13 +15,20 @@
 #define YEL "\e[1;33m"
 #define REDB "\e[41m"
 
-int	compare_files(const std::string &test) {
-	std::ifstream file("my_stack_output.txt", std::ifstream::binary|std::ifstream::ate);
-	std::ifstream file2("stack_output.txt", std::ifstream::binary|std::ifstream::ate);
+int	compare_files(const std::string &test, bool is_out_of_range, const std::string &file_name) {
+	std::string name = "my_" + file_name + "_output.txt";
+	std::string name2 = file_name + "_output.txt";
+	std::ifstream file(name.c_str(), std::ifstream::binary|std::ifstream::ate);
+	std::ifstream file2(name2.c_str(), std::ifstream::binary|std::ifstream::ate);
 
 	if (file.fail() || file2.fail()) {
-		std::cout << REDB << "Error: " << NC << "Can't open file" << (file.fail() ? "my_stack_output.txt" : "stack_output.txt") << std::endl;
+		std::cout << REDB << "Error: " << NC << "Can't open file" << (file.fail() ? name : name2) << std::endl;
 		return (2);
+	}
+
+	if (is_out_of_range) {
+		std::cout << " " BOLD << test << ":" NC " " GRN "OK " NC YEL "(output differs because throw error is not the same)" NC << std::endl;
+		return (0);
 	}
 
 	if (file.tellg() != file2.tellg()) {
@@ -32,9 +40,11 @@ int	compare_files(const std::string &test) {
 	return (1);
 }
 
-void	resize_files(std::ofstream &file, std::ofstream &file2) {
-	std::ifstream read("my_stack_output.txt", std::ifstream::binary|std::ifstream::ate);
-	std::ifstream read2("stack_output.txt", std::ifstream::binary|std::ifstream::ate);
+void	resize_files(std::ofstream &file, std::ofstream &file2, const std::string &file_name) {
+	std::string name = "my_" + file_name + "_output.txt";
+	std::string name2 = file_name + "_output.txt";
+	std::ifstream read(name.c_str(), std::ifstream::binary|std::ifstream::ate);
+	std::ifstream read2(name2.c_str(), std::ifstream::binary|std::ifstream::ate);
 	if (read.tellg() > read2.tellg()) {
 		for (int i = 0; i < (read.tellg() - read2.tellg()) - 1; i++)
 			file2 << " ";
@@ -46,7 +56,7 @@ void	resize_files(std::ofstream &file, std::ofstream &file2) {
 	}
 }
 
-int main(void) {
+int ft_stack(void) {
 
 	std::string filename("my_stack_output.txt");
 	std::ofstream file(filename.c_str());
@@ -87,8 +97,8 @@ int main(void) {
   	file2 << "size of third: " << thirdstl.size() << std::endl;
 	file2 << std::endl;
 	/* COMPARE FILES */
-	if (compare_files("CONSTRUCTORS TEST") == 0)
-		resize_files(file, file2);
+	if (compare_files("CONSTRUCTORS TEST", 0, "stack") == 0)
+		resize_files(file, file2, "stack");
 
 	/* EMPTY TEST MY STACK */
 	ft::stack<int> mystack;
@@ -131,8 +141,8 @@ int main(void) {
 	file2 << std::endl;
 
 	/* COMPARE FILES */
-	if (compare_files("EMPTY TEST") == 0)
-		resize_files(file, file2);
+	if (compare_files("EMPTY TEST", 0, "stack") == 0)
+		resize_files(file, file2, "stack");
 
 
 	/* SIZE TEST MY STACK */
@@ -166,8 +176,8 @@ int main(void) {
 	file2 << std::endl;
 
 	/* COMPARE FILES */
-	if (compare_files("SIZE TEST") == 0)
-		resize_files(file, file2);
+	if (compare_files("SIZE TEST", 0, "stack") == 0)
+		resize_files(file, file2, "stack");
 
 	/* TOP TEST MY STACK */
 	ft::stack<int> stacktop;
@@ -202,8 +212,8 @@ int main(void) {
 	file2 << std::endl;
 
 	/* COMPARE FILES */
-	if (compare_files("TOP TEST") == 0)
-		resize_files(file, file2);
+	if (compare_files("TOP TEST", 0, "stack") == 0)
+		resize_files(file, file2, "stack");
 
 	/* PUSH TEST MY STACK */
 	ft::stack<int> mystackpush;
@@ -241,8 +251,8 @@ int main(void) {
   	file2 << std::endl;
 
 	/* COMPARE FILES */
-	if (compare_files("PUSH TEST") == 0)
-		resize_files(file, file2);
+	if (compare_files("PUSH TEST", 0, "stack") == 0)
+		resize_files(file, file2, "stack");
 
 	/* POP TEST MY STACK */
 	ft::stack<int> mystackpop;
@@ -279,8 +289,8 @@ int main(void) {
   	file2 << std::endl;
 
 	/* COMPARE FILES */
-	if (compare_files("POP TEST") == 0)
-		resize_files(file, file2);
+	if (compare_files("POP TEST", 0, "stack") == 0)
+		resize_files(file, file2, "stack");
 
 	/* RELATIONAL OPERATORS TEST MY STACK */
 	ft::stack<int> a, b, c;
@@ -355,8 +365,8 @@ int main(void) {
 		file2 << "a is greater than or equal to b\n";
 
 	/* COMPARE FILES */
-	if (compare_files("RELATIONAL OPERATORS TEST") == 0)
-		resize_files(file, file2);
+	if (compare_files("RELATIONAL OPERATORS TEST", 0, "stack") == 0)
+		resize_files(file, file2, "stack");
 	std::cout << std::endl;
 
 	std::cout << BOLD "================" NC CYN " STACK TESTS FINISHED " NC BOLD "================" NC << std::endl;

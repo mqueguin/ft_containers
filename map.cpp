@@ -2,7 +2,8 @@
 #include <deque>
 #include <fstream>
 #include <iostream>
-#include "includes/map.hpp"
+#include "map.hpp"
+#include "tester.hpp"
 
 #define NC "\e[0m"
 #define BOLD "\e[1m"
@@ -12,52 +13,15 @@
 #define YEL "\e[1;33m"
 #define REDB "\e[41m"
 
-int	compare_files(const std::string &test, bool is_out_of_range) {
-	std::ifstream file("my_map_output.txt", std::ifstream::binary|std::ifstream::ate);
-	std::ifstream file2("map_output.txt", std::ifstream::binary|std::ifstream::ate);
-
-	if (file.fail() || file2.fail()) {
-		std::cout << REDB << "Error: " << NC << "Can't open file" << (file.fail() ? "my_map_output.txt" : "map_output.txt") << std::endl;
-		return (2);
-	}
-
-	if (is_out_of_range) {
-		std::cout << " " BOLD << test << ":" NC " " GRN "OK " NC YEL "(output differs because throw error is not the same)" NC << std::endl;
-		return (0);
-	}
-
-	if (file.tellg() != file2.tellg()) {
-		std::cout << " " BOLD << test << ":" NC " " RED "KO (output differs)" NC << std::endl;
-		return (0);
-	}
-
-	std::cout << " " BOLD << test << ":" NC " " GRN "OK" NC << std::endl;
-	return (1);
-}
-
-void	resize_files(std::ofstream &file, std::ofstream &file2) {
-	std::ifstream read("my_map_output.txt", std::ifstream::binary|std::ifstream::ate);
-	std::ifstream read2("map_output.txt", std::ifstream::binary|std::ifstream::ate);
-	if (read.tellg() > read2.tellg()) {
-		for (int i = 0; i < (read.tellg() - read2.tellg()) - 1; i++)
-			file2 << " ";
-		file2 << std::endl;
-	} else {
-		for (int i = 0; i < (read2.tellg() - read.tellg()) - 1; i++)
-			file << " ";
-		file << std::endl;
-	}
-}
-
 /* Function for testing map */
-bool fncomp(char lhs, char rhs) { return lhs < rhs; }
+static bool fncomp(char lhs, char rhs) { return lhs < rhs; }
 
 struct classcomp {
 	bool operator() (const char& lhs, const char& rhs) const
 	{ return lhs < rhs; }
 };
 
-int main(void) {
+int ft_map(void) {
 
 	std::string filename("my_map_output.txt");
 	std::ofstream file(filename.c_str());
@@ -150,8 +114,8 @@ int main(void) {
 	file2 << "Size of fifth map: " << fifthstl.size() << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("CONSTRUCTORS TESTS", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("CONSTRUCTORS TESTS", 0, "map") == 0)
+		resize_files(file, file2, "map");
 
 	/* OPERATOR= TESTS MY MAP */
 	ft::map<char, int> first2;
@@ -195,8 +159,8 @@ int main(void) {
 	file2 << "Size of second map: " << second2stl.size() << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("OPERATOR= TESTS", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("OPERATOR= TESTS", 0, "map") == 0)
+		resize_files(file, file2, "map");
 
 	/* ITERATORS TESTS: BEGIN() MY MAP */
 	ft::map<char, int> mymap;
@@ -228,8 +192,8 @@ int main(void) {
 	file2 << "Max size of the map: " << mymapstl.max_size() << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("ITERATORS TESTS: BEGIN()", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("ITERATORS TESTS: BEGIN()", 0, "map") == 0)
+		resize_files(file, file2, "map");
 	
 
 	/* ITERATORS TESTS: END() MY MAP */
@@ -262,8 +226,8 @@ int main(void) {
 	file2 << "Max size of the map: " << mymap2stl.max_size() << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("ITERATORS TESTS: END()", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("ITERATORS TESTS: END()", 0, "map") == 0)
+		resize_files(file, file2, "map");
 	
 
 	/* ITERATORS TESTS: RBEGIN() MY MAP */
@@ -296,8 +260,8 @@ int main(void) {
 	file2 << "Max size of the map: " << mymap3stl.max_size() << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("ITERATORS TESTS: RBEGIN()", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("ITERATORS TESTS: RBEGIN()", 0, "map") == 0)
+		resize_files(file, file2, "map");
 	
 
 	/* ITERATORS TESTS: REND() MY MAP */
@@ -330,8 +294,8 @@ int main(void) {
 	file2 << "Max size of the map: " << mymap4stl.max_size() << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("ITERATORS TESTS: REND()", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("ITERATORS TESTS: REND()", 0, "map") == 0)
+		resize_files(file, file2, "map");
 	
 
 	/* ICAPACITY TESTS: EMPTY() MY MAP */
@@ -374,8 +338,8 @@ int main(void) {
 	file2 << "Max size of the map: " << mymap5stl.max_size() << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("CAPACITY TESTS: EMPTY()", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("CAPACITY TESTS: EMPTY()", 0, "map") == 0)
+		resize_files(file, file2, "map");
 	
 
 	/* CAPACITY TESTS: SIZE() MY MAP */
@@ -432,8 +396,8 @@ int main(void) {
 	file2 << "Max size of the map: " << mymap6stl.max_size() << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("CAPACITY TESTS: SIZE()", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("CAPACITY TESTS: SIZE()", 0, "map") == 0)
+		resize_files(file, file2, "map");
 	
 
 	/* CAPACITY TESTS: MAX_SIZE() MY MAP */
@@ -468,8 +432,8 @@ int main(void) {
 	file2 << "Size of the map: " << mymap7stl.size() << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("CAPACITY TESTS: MAX_SIZE()", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("CAPACITY TESTS: MAX_SIZE()", 0, "map") == 0)
+		resize_files(file, file2, "map");
 
 	/* ELEMENT ACCESS TESTS: OPERATOR[] MY MAP */
 	ft::map<char, std::string> mymap8;
@@ -515,8 +479,8 @@ int main(void) {
 	file2 << "Map contains " << mymap8stl.size() << " elements" << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("ELEMENT ACCESS TESTS: OPERATOR[]", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("ELEMENT ACCESS TESTS: OPERATOR[]", 0, "map") == 0)
+		resize_files(file, file2, "map");
 	
 
 	/* ELEMENT ACCESS: AT() MY MAP */
@@ -579,8 +543,8 @@ int main(void) {
 	file2 << "Map max size: " << mymap9stl.max_size() << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("ELEMENT ACCESS TESTS: AT", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("ELEMENT ACCESS TESTS: AT", 0, "map") == 0)
+		resize_files(file, file2, "map");
 	
 
 	/* MODIFIERS TESTS: INSERT() MY MAP */
@@ -671,8 +635,8 @@ int main(void) {
 	file2 << "Map max size: " << mymap11stl.max_size() << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("MODIFIERS TESTS: INSERT", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("MODIFIERS TESTS: INSERT", 0, "map") == 0)
+		resize_files(file, file2, "map");
 
 	/* MODIFIERS TESTS: ERASE() */
 	ft::map<char, int> mymap12;
@@ -748,8 +712,8 @@ int main(void) {
 	file2 << "Max size of map: " << mymap12stl.max_size() << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("MODIFIERS TESTS: ERASE", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("MODIFIERS TESTS: ERASE", 0, "map") == 0)
+		resize_files(file, file2, "map");
 
 	/* MODIFIERS TESTS: SWAP() */
 	ft::map<char, int> foo, bar;
@@ -823,8 +787,8 @@ int main(void) {
 	file2 << "Size of second map: " << barstl.size() << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("MODIFIERS TESTS: SWAP", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("MODIFIERS TESTS: SWAP", 0, "map") == 0)
+		resize_files(file, file2, "map");
 
 	/* MODIFIERS TESTS: CLEAR() */
 	ft::map<char, int> mymap13;
@@ -880,8 +844,8 @@ int main(void) {
 	file2 << "Max size of map: " << mymap13stl.max_size() << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("MODIFIERS TESTS: CLEAR", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("MODIFIERS TESTS: CLEAR", 0, "map") == 0)
+		resize_files(file, file2, "map");
 	
 	/* OBSERVERS TESTS: KEY_COMP() */
 	ft::map<char, int> mymap14;
@@ -931,8 +895,8 @@ int main(void) {
 
 	file2 << std::endl;
 
-	if (compare_files("OBSERVERS TESTS: KEY_COMP", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("OBSERVERS TESTS: KEY_COMP", 0, "map") == 0)
+		resize_files(file, file2, "map");
 
 	/* OPERATIONS TESTS: FIND() */
 	ft::map<char, int> mymap15;
@@ -990,8 +954,8 @@ int main(void) {
 	file2 << "Max size of map: " << mymap15stl.max_size() << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("OPERATIONS TESTS: FIND()", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("OPERATIONS TESTS: FIND()", 0, "map") == 0)
+		resize_files(file, file2, "map");
 	
 	/* OPERATIONS TESTS: COUNT() */
 	ft::map<char, int> mymap16;
@@ -1039,8 +1003,8 @@ int main(void) {
 	}
 	file2 << std::endl;
 
-	if (compare_files("OPERATIONS TESTS: COUNT()", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("OPERATIONS TESTS: COUNT()", 0, "map") == 0)
+		resize_files(file, file2, "map");
 	
 	/* OPERATIONS TESTS: LOWER_BOUND() */
 	ft::map<char, int> mymap17;
@@ -1102,8 +1066,8 @@ int main(void) {
 		file2 << it->first << " => " << it->second << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("OPERATIONS TESTS: LOWER_BOUND()", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("OPERATIONS TESTS: LOWER_BOUND()", 0, "map") == 0)
+		resize_files(file, file2, "map");
 	
 	/* OPERATIONS TESTS: UPPER_BOUND() */
 	ft::map<char, int> mymap18;
@@ -1165,8 +1129,8 @@ int main(void) {
 		file2 << it->first << " => " << it->second << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("OPERATIONS TESTS: UPPER_BOUND()", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("OPERATIONS TESTS: UPPER_BOUND()", 0, "map") == 0)
+		resize_files(file, file2, "map");
 	
 	/* OPERATIONS TESTS: EQUAL_RANGE() */
 	ft::map<char, int> mymap19;
@@ -1212,8 +1176,8 @@ int main(void) {
 	file2 << ret19stl.second->first << " => " << ret19stl.second->second << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("OPERATIONS TESTS: EQUAL_RANGE()", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("OPERATIONS TESTS: EQUAL_RANGE()", 0, "map") == 0)
+		resize_files(file, file2, "map");
 	
 	/* RELATIONAL OPERATORS TESTS */
 	ft::map<char,int> foo20, bar20;
@@ -1275,9 +1239,10 @@ int main(void) {
 		file2 << "foo is greater than or equal to bar" << std::endl;
 	file2 << std::endl;
 
-	if (compare_files("RELATIONAL OPERATORS TESTS", 0) == 0)
-		resize_files(file, file2);
+	if (compare_files("RELATIONAL OPERATORS TESTS", 0, "map") == 0)
+		resize_files(file, file2, "map");
 	
 	std::cout << std::endl;
 	std::cout << BOLD "================ " NC CYN "MAP TESTS FINISHED" NC BOLD " ================" << std::endl;
+	return (1);
 }
