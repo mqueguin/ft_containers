@@ -16,7 +16,6 @@ SRC			=	vector.cpp map.cpp stack.cpp main.cpp
 INC			=	tester.hpp \
 				iterator.hpp \
 				type_traits.hpp \
-				mapIterator.hpp \
 				utilityMap.hpp \
 				iterator_tag.hpp \
 				redBlackTree.hpp \
@@ -62,12 +61,12 @@ $(NAME): $(OBJ)
 
 clean:
 		@echo "$(_WHITE)Deleting Objects Directory $(_YELLOW)$(OBJ_DIR)$(_WHITE) ... \c"
-		@rm -rf $(OBJ_DIR) $(OBJ_DIR_BONUS)
+		@rm -rf $(OBJ_DIR)
 		@echo "$(_GREEN)DONE$(_WHITE)\n-----"
 
 fclean: clean
 		@echo "$(_WHITE)Deleting Binary File $(_YELLOW)$(NAME)$(_WHITE) ... \c"
-		@rm -f $(NAME) $(NAME_BONUS)
+		@rm -f $(NAME)
 		@echo "$(_GREEN)DONE$(_WHITE)\n-----"
 
 re:		fclean all

@@ -288,8 +288,6 @@ int ft_vector(void) {
   	for (ft::vector<int>::reverse_iterator it = myvector4.rbegin() ; it != myvector4.rend(); ++it)
 		file << ' ' << *it;
   	file << std::endl;
-	file << "Valeur de rend() + 3: " << *(myvector4.rend() + 3) << std::endl;
-	file << "Valeur de rend() + 7: " << *(myvector4.rend() + 7) << std::endl;
 	file << "Valeur de rend() - rbegin(): " << myvector4.rend() - myvector4.rbegin() << std::endl;
 	file << std::endl;
 
@@ -306,8 +304,6 @@ int ft_vector(void) {
   	for (std::vector<int>::reverse_iterator it = myvectorstl4.rbegin() ; it != myvectorstl4.rend(); ++it)
 		file2 << ' ' << *it;
   	file2 << std::endl;
-	file2 << "Valeur de rend() + 3: " << *(myvectorstl4.rend() + 3) << std::endl;
-	file2 << "Valeur de rend() + 7: " << *(myvectorstl4.rend() + 7) << std::endl;
 	file2 << "Valeur de rend() - rbegin(): " << myvectorstl4.rend() - myvectorstl4.rbegin() << std::endl;
 	file2 << std::endl;
 
@@ -349,45 +345,6 @@ int ft_vector(void) {
 	file2 << std::endl;
 
 	if (compare_files("ITERATORS TESTS CONST ITERATOR", 0, "vector") == 0)
-		resize_files(file, file2, "vector");
-
-
-	/* ITERATORS TESTS: CONST REVERSE ITERATOR MY VECTOR */
-	ft::vector<int> myvector6;
-
-	file << "ITERATORS TESTS CONST REVERSE ITERATOR" << std::endl;
-  	for (int i = 1; i <= 5; i++) {
-		file << "Push back: " << i << std::endl;
-		myvector6.push_back(i);
-	}
-	file << "myvector contains:";
-  	for (ft::vector<int>::const_reverse_iterator it = myvector6.rbegin() ; it != myvector6.rend(); ++it)
-		file << ' ' << *it;
-  	file << std::endl;
-	file << "Valeur de rend() + 3: " << *(myvector6.rend() + 3) << std::endl;
-	file << "Valeur de rend() + 7: " << *(myvector6.rend() + 7) << std::endl;
-	file << "Valeur de rend() - rbegin(): " << myvector6.rend() - myvector6.rbegin() << std::endl;
-	file << std::endl;
-
-
-	/* ITERATORS TESTS: CONST REVERSE ITERATOR STL VECTOR */
-	std::vector<int> myvectorstl6;
-
-	file2 << "ITERATORS TESTS CONST REVERSE ITERATOR" << std::endl;
-  	for (int i = 1; i <= 5; i++) {
-		file2 << "Push back: " << i << std::endl;
-		myvectorstl6.push_back(i);
-	}
-	file2 << "myvector contains:";
-  	for (std::vector<int>::const_reverse_iterator it = myvectorstl6.rbegin() ; it != myvectorstl6.rend(); ++it)
-		file2 << ' ' << *it;
-  	file2 << std::endl;	
-	file2 << "Valeur de rend() + 3: " << *(myvectorstl6.rend() + 3) << std::endl;
-	file2 << "Valeur de rend() + 7: " << *(myvectorstl6.rend() + 7) << std::endl;
-	file2 << "Valeur de rend() - rbegin(): " << myvectorstl6.rend() - myvectorstl6.rbegin() << std::endl;
-	file2 << std::endl;
-
-	if (compare_files("ITERATORS TESTS CONST REVERSE ITERATOR", 0, "vector") == 0)
 		resize_files(file, file2, "vector");
 
 
