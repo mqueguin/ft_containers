@@ -8,7 +8,7 @@
 			"name": "(gdb) Launch",
 			"type": "cppdbg",
 			"request": "launch",
-			"program": "/sgoinfre/goinfre/Perso/mqueguin/ft_containers/includes/a.out",
+			"program": "/sgoinfre/goinfre/Perso/mqueguin/ft_containers/a.out",
 			"args": [],
 			"stopAtEntry": false,
 			"cwd": "${fileDirname}",

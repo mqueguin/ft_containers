@@ -1,4 +1,5 @@
-#pragma once
+#ifndef ITERATOR_TAG_HPP
+#define ITERATOR_TAG_HPP
 
 namespace ft
 {
@@ -8,3 +9,5 @@ namespace ft
 	struct bidirectional_iterator_tag : public forward_iterator_tag {};
 	struct random_access_iterator_tag : public bidirectional_iterator_tag {};
 };
+
+#endif

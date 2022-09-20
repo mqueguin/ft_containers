@@ -6,54 +6,43 @@
 #include "reverseIterator.hpp"
 #include "iterator_tag.hpp"
 
-/*#define BLACK 0
-#define RED 1*/
-
 namespace ft
 {
-	typedef enum 	e_color
-	{
+	typedef enum 	e_color {
 		RED,
 		BLACK
 	}				t_color;
 
 	template <typename T>
-	struct	rb_tree_node
-	{
+	struct	node {
 		T				value;
 		t_color			color;
-		rb_tree_node	*parent;
-		rb_tree_node	*left;
-		rb_tree_node	*right;
+		node	*parent;
+		node	*left;
+		node	*right;
 
-		rb_tree_node(void) : value(), color(BLACK), parent(NULL), left(NULL), right(NULL)
-		{
-		}
-		rb_tree_node(const T &val) : value(val), color(RED), parent(NULL), left(NULL), right(NULL)
-		{
-		}
-		rb_tree_node(const rb_tree_node &obj) : value(obj.value), color(RED), parent(obj.parent), left(obj.left), right(obj.right)
-		{
-		}
-		~rb_tree_node()
-		{
-		}
+		node(void) : color(BLACK), parent(NULL), left(NULL), right(NULL) {}
 
-		rb_tree_node	&operator=(const rb_tree_node &rhs)
-		{
+		node(const T &val) : value(val), color(RED), parent(NULL), left(NULL), right(NULL) {}
+
+		node(const node &obj) : value(obj.value), color(RED), parent(obj.parent), left(obj.left), right(obj.right) {}
+		
+		~node(void) {}
+
+		node	&operator=(const node &rhs) {
 			value = rhs.value;
 			parent = rhs.parent;
 			left = rhs.left;
 			right = rhs.right;
-			return *this;
+			return (*this);
 		}
 	};
 
 	template <class T>
-	class _tree_iterator
-	{
+	class _tree_iterator {
 		private:
-			typedef ft::rb_tree_node<T> *		_base_ptr;
+			typedef ft::node<T> *		_base_ptr;
+			_base_ptr					_node;
 
 		public:
 			template <class, class, class>
@@ -64,48 +53,39 @@ namespace ft
 			typedef value_type &				reference;
 			typedef bidirectional_iterator_tag	iterator_category;
 
-			_tree_iterator(void) : _node()
-			{
-			}
-			_tree_iterator(_base_ptr ptr) : _node(ptr)
-			{
-			}
-			_tree_iterator(const _tree_iterator& obj) : _node()
-			{
+			_tree_iterator(void) {}
+
+			_tree_iterator(_base_ptr ptr) : _node(ptr) {}
+
+			_tree_iterator(const _tree_iterator& obj) {
 				*this = obj;
 			}
-			~_tree_iterator(void)
-			{
-			}
 
-			_tree_iterator	&operator=(const _tree_iterator &obj)
-			{
+			~_tree_iterator(void) {}
+
+			_tree_iterator	&operator=(const _tree_iterator &obj) {
 				_node = obj._node;
-				return *this;
+				return (*this);
 			}
 
-			bool		operator==(const _tree_iterator &rhs) const
-			{
-				return _node == rhs._node;
+			bool		operator==(const _tree_iterator &rhs) const {
+				return (_node == rhs._node);
 			}
 
-			bool		operator!=(const _tree_iterator &rhs) const
-			{
+			bool		operator!=(const _tree_iterator &rhs) const {
 				return !(*this == rhs);
 			}
 
-			reference	operator*()
-			{
-				return _node->value;
+			reference	operator*() {
+				return (_node->value);
 			}
 
-			pointer	operator->(void) const
-			{
-				return &_node->value;
+			pointer	operator->(void) const {
+				return (&_node->value);
 			}
 
-			_tree_iterator	&operator++()
-			{
+			/* Pre incrementation */
+			_tree_iterator	&operator++() {
 				if (_node->right != NULL)
 				{
 					_node = _node->right;
@@ -115,202 +95,177 @@ namespace ft
 				else
 				{
 					_base_ptr	y = _node->parent;
-					while (_node == y->right)
-					{
+					while (_node == y->right) {
 						_node = y;
 						y = y->parent;
 					}
 					if (_node->right != y)
 						_node = y;
 				}
-				return *this;
-			}
-			_tree_iterator	operator++(int)
-			{
-				_tree_iterator	tmp(*this);
-				++(*this);
-				return tmp;
+				return (*this);
 			}
 
-			_tree_iterator& operator--()
-			{
+			/* Post incrementation */
+			_tree_iterator	operator++(int) {
+				_tree_iterator	tmp(*this);
+				++(*this);
+				return (tmp);
+			}
+
+			/* Pre decrementation */
+			_tree_iterator& operator--() {
 				if (_node->color == RED && _node->parent->parent == _node)  
 					_node = _node->right;
-				else if (_node->left != NULL)
-				{
+				else if (_node->left != NULL) {
 					_base_ptr y = _node->left;
 					while (y->right != NULL)
 						y = y->right;
 					_node = y;
-				}
-				else
-				{
+				} else {
 					_base_ptr y = _node->parent;
-					while (_node == y->left)
-					{
+					while (_node == y->left) {
 						_node = y;
 						y = y->parent;
 					}
 					_node = y;
 				}
-				return *this;
+				return (*this);
 			}
-			_tree_iterator	operator--(int)
-			{
+
+			/* Post decrementation */
+			_tree_iterator	operator--(int) {
 				_tree_iterator	tmp(*this);
 				--(*this);
-				return tmp;
+				return (tmp);
 			}
 
-			_base_ptr	base(void) const
-			{
-				return _node;
+			_base_ptr	base(void) const {
+				return (_node);
 			}
-
-		private:
-			_base_ptr	_node;
 	};
 
 	template <class T>
 	class _const_tree_iterator
 	{
 		private:
-			typedef ft::rb_tree_node<T> *		_base_ptr;
+			typedef ft::node<T> *		_base_ptr;
+			_base_ptr					_node;
 
 		public:
 			template <class, class, class>
 			friend struct rb_tree;
 			typedef const T						value_type;
-			typedef ptrdiff_t					difference_type;
+			typedef std::ptrdiff_t					difference_type;
 			typedef const value_type *			pointer;
 			typedef const value_type &			reference;
 			typedef bidirectional_iterator_tag	iterator_category;
 
-			_const_tree_iterator(void) : _node()
-			{
-			}
-			_const_tree_iterator(_base_ptr ptr) : _node(ptr)
-			{
-			}
-			_const_tree_iterator(const _tree_iterator<T>& obj) : _node()
-			{
+			_const_tree_iterator(void) {}
+
+			_const_tree_iterator(_base_ptr ptr) : _node(ptr) {}
+
+			_const_tree_iterator(const _tree_iterator<T>& obj) {
 				*this = obj;
-			}
-			_const_tree_iterator(const _const_tree_iterator& obj) : _node()
-			{
-				*this = obj;
-			}
-			~_const_tree_iterator(void)
-			{
 			}
 
-			_const_tree_iterator	&operator=(const _tree_iterator<T> &obj)
-			{
+			_const_tree_iterator(const _const_tree_iterator& obj) {
+				*this = obj;
+			}
+
+			~_const_tree_iterator(void) {}
+
+			_const_tree_iterator	&operator=(const _tree_iterator<T> &obj) {
 				_node = obj.base();
-				return *this;
+				return (*this);
 			}
-			_const_tree_iterator	&operator=(const _const_tree_iterator &obj)
-			{
+
+			_const_tree_iterator	&operator=(const _const_tree_iterator &obj) {
 				_node = obj._node;
-				return *this;
+				return (*this);
 			}
 
-			bool		operator==(const _const_tree_iterator &rhs) const
-			{
-				return _node == rhs._node;
+			bool		operator==(const _const_tree_iterator &rhs) const {
+				return (_node == rhs._node);
 			}
 
-			bool		operator!=(const _const_tree_iterator &rhs) const
-			{
+			bool		operator!=(const _const_tree_iterator &rhs) const{
 				return !(*this == rhs);
 			}
 
-			reference	operator*() const
-			{
-				return _node->value;
+			pointer	operator->(void) const {
+				return (&_node->value);
 			}
 
-			pointer	operator->(void) const
-			{
-				return &_node->value;
+			reference	operator*() const {
+				return (_node->value);
 			}
 
-			_const_tree_iterator	&operator++()
-			{
-				if (_node->right != NULL)
-				{
+			/* Pre incrementation */
+			_const_tree_iterator	&operator++() {
+				if (_node->right != NULL) {
 					_node = _node->right;
 					while (_node->left != NULL)
 						_node = _node->left;
-				}
-				else
-				{
+				} else {
 					_base_ptr	y = _node->parent;
-					while (_node == y->right)
-					{
+					while (_node == y->right) {
 						_node = y;
 						y = y->parent;
 					}
 					if (_node->right != y)
 						_node = y;
 				}
-				return *this;
-			}
-			_const_tree_iterator	operator++(int)
-			{
-				_const_tree_iterator	tmp(*this);
-				++(*this);
-				return tmp;
+				return (*this);
 			}
 
-			_const_tree_iterator& operator--()
-			{
+			/* Post incrementation */
+			_const_tree_iterator	operator++(int) {
+				_const_tree_iterator	tmp(*this);
+				++(*this);
+				return (tmp);
+			}
+
+			/* Pre decrementation */
+			_const_tree_iterator& operator--() {
 				if (_node->color == RED && _node->parent->parent == _node)  
 					_node = _node->right;
-				else if (_node->left != NULL)
-				{
+				else if (_node->left != NULL) {
 					_base_ptr y = _node->left;
 					while (y->right != NULL)
 						y = y->right;
 					_node = y;
-				}
-				else
-				{
+				} else {
 					_base_ptr y = _node->parent;
-					while (_node == y->left)
-					{
+					while (_node == y->left) {
 						_node = y;
 						y = y->parent;
 					}
 					_node = y;
 				}
-				return *this;
+				return (*this);
 			}
-			_const_tree_iterator	operator--(int)
-			{
+
+			/* Post decrementation */
+			_const_tree_iterator	operator--(int) {
 				_const_tree_iterator	tmp(*this);
 				--(*this);
-				return tmp;
+				return (tmp);
 			}
 
-			_base_ptr	base(void) const
-			{
-				return _node;
+			_base_ptr	base(void) const {
+				return (_node);
 			}
-
-		private:
-			_base_ptr	_node;
 	};
 
-	template < class T, class Compare, class Allocator = std::allocator< rb_tree_node<T> > >
+	template < class T, class Compare, class Allocator = std::allocator< node<T> > >
 	struct rb_tree
 	{
-		typedef rb_tree_node<T>							value_type;
+		typedef node<T>							value_type;
 		typedef	std::allocator<value_type>				allocator;
 		typedef value_type 								&reference;
 		typedef const value_type						&const_reference;
-		typedef rb_tree_node<T>							*node_type;
-		typedef rb_tree_node<T>					*const_node_type;
+		typedef node<T>							*node_type;
+		typedef node<T>					*const_node_type;
 		typedef	_tree_iterator<T>						iterator;
 		typedef	_const_tree_iterator<T>					const_iterator;
 		typedef ft::reverse_iterator<iterator>			reverse_iterator;
@@ -323,32 +278,29 @@ namespace ft
 		node_type			header;
 		size_type			node_count;
 
-		rb_tree(void) : alloc(), key_compare(), root(NULL), header(alloc.allocate(1)), node_count(0)
-		{
+		rb_tree(void) : alloc(), key_compare(), root(NULL), header(alloc.allocate(1)), node_count(0) {
 			alloc.construct(header, value_type());
 			header->color = RED;
 			header->parent = root;
 			header->left = header;
 			header->right = header;
-		}
-		rb_tree(const Compare &comp) : alloc(), key_compare(comp), root(NULL), header(alloc.allocate(1)), node_count(0)
-		{
-			alloc.construct(header, value_type());
-			header->color = RED;
-			header->parent = root;
-			header->left = header;
-			header->right = header;
-		}
-		rb_tree(const rb_tree &obj) : alloc(), key_compare(), root(), header(), node_count(0)
-		{
-			*this = obj;
-		}
-		~rb_tree(void)
-		{
 		}
 
-		rb_tree	&operator=(const rb_tree &rhs)
-		{
+		rb_tree(const Compare &comp) : alloc(), key_compare(comp), root(NULL), header(alloc.allocate(1)), node_count(0) {
+			alloc.construct(header, value_type());
+			header->color = RED;
+			header->parent = root;
+			header->left = header;
+			header->right = header;
+		}
+
+		rb_tree(const rb_tree &obj) : alloc(), key_compare(), root(), header(), node_count(0) {
+			*this = obj;
+		}
+
+		~rb_tree(void) {}
+
+		rb_tree	&operator=(const rb_tree &rhs) {
 			key_compare = rhs.key_compare;
 			root = rhs.root;
 			header = rhs.header;
@@ -356,26 +308,23 @@ namespace ft
 			return *this;
 		}
 
-		iterator	begin(void)
-		{
+		iterator	begin(void) {
 			return iterator(leftmost());
 		}
-		const_iterator	begin(void) const
-		{
+
+		const_iterator	begin(void) const {
 			return const_iterator(leftmost());
 		}
 
-		iterator	end(void)
-		{
+		iterator	end(void) {
 			return iterator(header);
 		}
-		const_iterator	end(void) const
-		{
+
+		const_iterator	end(void) const {
 			return const_iterator(header);
 		}
 
-		node_type	left_rotate_tree(node_type node, node_type parent)
-		{
+		node_type	left_rotate_tree(node_type node, node_type parent) {
 			node_type	old_root = node;
 			node = node->right;
 			node->parent = old_root->parent;
@@ -395,8 +344,7 @@ namespace ft
 			return node;
 		}
 
-		node_type	right_rotate_tree(node_type node, node_type parent)
-		{
+		node_type	right_rotate_tree(node_type node, node_type parent) {
 			node_type	old_root = node;
 			node = node->left;
 			node->parent = old_root->parent;
@@ -416,65 +364,48 @@ namespace ft
 			return node;
 		}
 
-		void	balance_tree(node_type node)
-		{
-			while (node != root && node->parent != root && node->parent->color == RED)
-			{
-				if (node->parent == node->parent->parent->left)
-				{
+		/* Check if the tree is balancing */
+		void	balance_tree(node_type node) {
+			while (node != root && node->parent != root && node->parent->color == RED) {
+				if (node->parent == node->parent->parent->left) {
 					node_type	y = node->parent->parent->right;
-					if (y != NULL && y->color == RED)
-					{
+					if (y != NULL && y->color == RED) {
 						node->parent->color = BLACK;
 						y->color = BLACK;
 						node->parent->parent->color = RED;
 						node = node->parent->parent;
-					}
-					else
-					{
-						if (node == node->parent->right)
-						{
+					} else {
+						if (node == node->parent->right) {
 							node = node->parent;
 							node = left_rotate_tree(node, node->parent);
-						}
-						else
-						{
+						} else {
 							node->parent->color = BLACK;
 							node->parent->parent->color = RED;
 							node = right_rotate_tree(node->parent->parent, node->parent->parent->parent);
 						}
-						if (node->parent == header)
-						{
+						if (node->parent == header) {
 							root = node;
 							header->parent = node;
 						}
 					}
 				}
-				else
-				{
+				else {
 					node_type	y = node->parent->parent->left;
-					if (y != NULL && y->color == RED)
-					{
+					if (y != NULL && y->color == RED) {
 						node->parent->color = BLACK;
 						y->color = BLACK;
 						node->parent->parent->color = RED;
 						node = node->parent->parent;
-					}
-					else
-					{
-						if (node == node->parent->left)
-						{
+					} else {
+						if (node == node->parent->left) {
 							node = node->parent;
 							node = right_rotate_tree(node, node->parent);
-						}
-						else
-						{
+						} else {
 							node->parent->color = BLACK;
 							node->parent->parent->color = RED;
 							node = left_rotate_tree(node->parent->parent, node->parent->parent->parent);
 						}
-						if (node->parent == header)
-						{
+						if (node->parent == header) {
 							root = node;
 							header->parent = node;
 						}
@@ -484,10 +415,8 @@ namespace ft
 			root->color = BLACK;
 		}
 
-		iterator	insert(const T& value)
-		{
-			if (root == NULL)
-			{
+		iterator	insert(const T& value) {
+			if (root == NULL) {
 				root = alloc.allocate(1);
 				alloc.construct(root, value);
 				root->color = BLACK;
@@ -496,16 +425,16 @@ namespace ft
 				header->left = root;
 				header->right = root;
 				node_count++;
-				return root;
+				return (root);
 			}
+
 			iterator it = lower_bound(value.first);
 			if (it->first == value.first)
 				return it;
 			node_type	z = root;
 			bool		direction;
 			node_type	node;
-			while (z != NULL)
-			{
+			while (z != NULL) {
 				direction = key_compare(value.first, z->value.first);
 				node = direction ? z->left : z->right;
 				if (node == NULL || node == header)
@@ -523,7 +452,7 @@ namespace ft
 			balance_tree(node);
 			header->color = RED;
 			node_count++;
-			return node;
+			return (node);
 		}
 
 		void	erase(iterator _node)
