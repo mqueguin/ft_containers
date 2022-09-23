@@ -62,6 +62,7 @@ $(NAME): $(OBJ)
 clean:
 		@echo "$(_WHITE)Deleting Objects Directory $(_YELLOW)$(OBJ_DIR)$(_WHITE) ... \c"
 		@rm -rf $(OBJ_DIR)
+		@rm *output.txt
 		@echo "$(_GREEN)DONE$(_WHITE)\n-----"
 
 fclean: clean

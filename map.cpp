@@ -1239,6 +1239,49 @@ int ft_map(void) {
 
 	if (compare_files("RELATIONAL OPERATORS TESTS", 0, "map") == 0)
 		resize_files(file, file2, "map");
+
+	/* VALUE_COMPARE TESTS */
+	ft::map<char,int> mymap20;
+
+  	mymap20['x'] = 1001;
+  	mymap20['y'] = 2002;
+  	mymap20['z'] = 3003;
+
+	file << "VALUE_COMPARE TESTS" << std::endl;
+ 	file << "mymap contains:" << std::endl;
+
+ 	ft::pair<char,int> highest = *mymap20.rbegin();          // last element
+
+  	ft::map<char,int>::iterator iter = mymap20.begin();
+  	do {
+    	file << iter->first << " => " << iter->second << std::endl;
+  	} while (mymap20.value_comp()(*iter++, highest))
+    	;
+    file << "Size of map: " << mymap20.size() << std::endl;
+    file << "Max size of map: " << mymap20.max_size() << std::endl;
+
+	/* VALUE_COMPARE TESTS STL MAP */
+	std::map<char,int> mymap20stl;
+
+  	mymap20stl['x'] = 1001;
+  	mymap20stl['y'] = 2002;
+  	mymap20stl['z'] = 3003;
+
+	file2 << "VALUE_COMPARE TESTS" << std::endl;
+ 	file2 << "mymap contains:" << std::endl;
+
+ 	std::pair<char,int> higheststl = *mymap20stl.rbegin();          // last element
+
+  	std::map<char,int>::iterator itstl = mymap20stl.begin();
+  	do {
+		file2 << itstl->first << " => " << itstl->second << std::endl;
+  	} while (mymap20stl.value_comp()(*itstl++, higheststl))
+		;
+	file2 << "Size of map: " << mymap20stl.size() << std::endl;
+	file2 << "Max size of map: " << mymap20stl.max_size() << std::endl;
+
+	if (compare_files("VALUE_COMPARE TESTS", 0, "map") == 0)
+		resize_files(file, file2, "map");
 	
 	std::cout << std::endl;
 	std::cout << BOLD "================ " NC CYN "MAP TESTS FINISHED" NC BOLD " ================" << std::endl;

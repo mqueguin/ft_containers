@@ -412,15 +412,6 @@ namespace ft {
 	/* OVERLOAD OPERATOR out vector class */
 	template<class T, class Alloc>
 		bool operator==(const vector<T, Alloc> &lhs, const vector<T, Alloc> &rhs) {
-			/*if (lhs.size() != rhs.size())
-				return (false);
-			typename vector<T, Alloc>::const_iterator it1 = lhs.begin();
-			typename vector<T, Alloc>::const_iterator it2 = rhs.begin();
-			for (; it1 != lhs.end(); ++it1, ++it2) {
-				if (*it1 != *it2)
-					return (false);
-			}
-			return (true);*/
 			if (lhs.size() != rhs.size())
 				return (false);
 			return (ft::equal(lhs.begin(), lhs.end(), rhs.begin()));

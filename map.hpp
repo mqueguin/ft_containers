@@ -12,18 +12,10 @@ namespace ft
 	template< class Key, class T, class Compare = ft::less<Key>, class Allocator = std::allocator<ft::pair<const Key, T> > >
 	class map
 	{
-	
 		public:
 			typedef Key											key_type;
 			typedef T											mapped_type;
 			typedef ft::pair<const Key, T>						value_type;
-
-		private:
-			typedef ft::rb_tree<value_type, Compare> 			_rep_type;
-			Allocator											_alloc;
-			_rep_type											_tree;
-
-		public:
 			typedef std::size_t									size_type;
 			typedef std::ptrdiff_t								difference_type;
 			typedef Compare										key_compare;
@@ -38,7 +30,10 @@ namespace ft
 			typedef typename ft::reverse_iterator<const_iterator> const_reverse_iterator;
 
 		private: 
-			typedef typename allocator_type::template rebind< node< value_type > >::other node_allocator_type;
+			typedef typename allocator_type::template rebind< node< value_type > >::other 	node_allocator_type;
+			typedef ft::rb_tree<value_type, Compare> 										_rep_type;
+			Allocator																		_alloc;
+			_rep_type																		_tree;
 
 		public:
 			class value_compare
@@ -57,7 +52,7 @@ namespace ft
 				protected:
 					Compare	comp;
 
-					value_compare(Compare c) : comp(c) {}
+					value_compare(Compare c): comp(c) {}
 			};
 	
 			map(void) : _alloc(), _tree() {}
