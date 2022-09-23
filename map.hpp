@@ -55,7 +55,7 @@ namespace ft
 					value_compare(Compare c): comp(c) {}
 			};
 	
-			map(void) : _alloc(), _tree() {}
+			map(void): _alloc(), _tree() {}
 
 			explicit map(const Compare &comp, const Allocator &alloc = Allocator()) : _alloc(alloc), _tree(comp) {}
 
@@ -63,8 +63,8 @@ namespace ft
 				*this = obj;
 			}
 
-			template<class InputIt>
-			map(InputIt first, InputIt last, const Compare& comp = Compare(), const Allocator& alloc = Allocator()) : _alloc(alloc), _tree(comp) {
+			template<class InputIterator>
+			map(InputIterator first, InputIterator last, const Compare& comp = Compare(), const Allocator& alloc = Allocator()) : _alloc(alloc), _tree(comp) {
 				for (; first != last; first++)
 					_tree.insert(*first);
 			}
