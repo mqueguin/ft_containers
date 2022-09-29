@@ -41,17 +41,17 @@ namespace ft
 	template <class T>
 	class _tree_iterator {
 		private:
-			typedef ft::node<T> *		_base_ptr;
+			typedef ft::node<T> 		*_base_ptr;
 			_base_ptr					_node;
 
 		public:
 			template <class, class, class>
 			friend struct rb_tree;
-			typedef T							value_type;
-			typedef ptrdiff_t					difference_type;
-			typedef value_type *				pointer;
-			typedef value_type &				reference;
-			typedef bidirectional_iterator_tag	iterator_category;
+			typedef T							value_type; //Type of elements pointed by the iterator
+			typedef ptrdiff_t					difference_type; //Type represent the difference between two iterators
+			typedef value_type *				pointer; // Type to represent a pointer to an element pointed by the iterator
+			typedef value_type &				reference; // Type to represent a reference to an element pointed by the iterator
+			typedef bidirectional_iterator_tag	iterator_category; // Category of iterator
 
 			_tree_iterator(void) {}
 
@@ -86,6 +86,9 @@ namespace ft
 
 			/* Pre incrementation */
 			_tree_iterator	&operator++() {
+				std::cout << "Valeur de _node->parent->value.first: " << _node->parent->value.first << " et valeur de second: " << _node->parent->value.second << std::endl;
+				std::cout << "Valeur de _node->parent->left->value.first: " << _node->parent->left->value.first << " et valeur de second: " << _node->parent->left->value.second << std::endl;
+				std::cout << "Valeur de _node->parent->left->value.first: " << _node->parent->right->value.first << " et valeur de second: " << _node->parent->right->value.second << std::endl;
 				if (_node->right != NULL)
 				{
 					_node = _node->right;
@@ -278,7 +281,7 @@ namespace ft
 		node_type			header;
 		size_type			node_count;
 
-		rb_tree(void) : alloc(), key_compare(), root(NULL), header(alloc.allocate(1)), node_count(0) {
+		rb_tree(void): alloc(), key_compare(), root(NULL), header(alloc.allocate(1)), node_count(0) {
 			alloc.construct(header, value_type());
 			header->color = RED;
 			header->parent = root;
@@ -286,7 +289,7 @@ namespace ft
 			header->right = header;
 		}
 
-		rb_tree(const Compare &comp) : alloc(), key_compare(comp), root(NULL), header(alloc.allocate(1)), node_count(0) {
+		rb_tree(const Compare &comp): alloc(), key_compare(comp), root(NULL), header(alloc.allocate(1)), node_count(0) {
 			alloc.construct(header, value_type());
 			header->color = RED;
 			header->parent = root;
@@ -294,7 +297,7 @@ namespace ft
 			header->right = header;
 		}
 
-		rb_tree(const rb_tree &obj) : alloc(), key_compare(), root(), header(), node_count(0) {
+		rb_tree(const rb_tree &obj): alloc(), key_compare(), root(), header(), node_count(0) {
 			*this = obj;
 		}
 
@@ -305,23 +308,23 @@ namespace ft
 			root = rhs.root;
 			header = rhs.header;
 			node_count = rhs.node_count;
-			return *this;
+			return (*this);
 		}
 
 		iterator	begin(void) {
-			return iterator(leftmost());
+			return (iterator(leftmost()));
 		}
 
 		const_iterator	begin(void) const {
-			return const_iterator(leftmost());
+			return (const_iterator(leftmost()));
 		}
 
 		iterator	end(void) {
-			return iterator(header);
+			return (iterator(header));
 		}
 
 		const_iterator	end(void) const {
-			return const_iterator(header);
+			return (const_iterator(header));
 		}
 
 		node_type	left_rotate_tree(node_type node, node_type parent) {
@@ -341,7 +344,7 @@ namespace ft
 				else
 					parent->right = node;
 			}
-			return node;
+			return (node);
 		}
 
 		node_type	right_rotate_tree(node_type node, node_type parent) {
@@ -361,7 +364,7 @@ namespace ft
 				else
 					parent->right = node;
 			}
-			return node;
+			return (node);
 		}
 
 		/* Check if the tree is balancing */
@@ -429,6 +432,7 @@ namespace ft
 			}
 
 			iterator it = lower_bound(value.first);
+			std::cout << "VAleur de it->first: " << it->first << std::endl;
 			if (it->first == value.first)
 				return it;
 			node_type	z = root;
@@ -462,7 +466,6 @@ namespace ft
 				header->left = node->parent;
 			if (header->right == node)
 				header->right = node->parent;
-			// if no child
 			if (node->left == NULL && node->right == NULL)
 			{
 				if (root == node)
@@ -547,84 +550,74 @@ namespace ft
 		{
 			node_type	node = root;
 			node_type	greater = node->parent;
-			while (node != NULL)
-			{
+			while (node != NULL) {
 				if (key_compare(node->value.first, key))
 					node = node->right;
-				else
-				{
+				else {
 					greater = node;
 					node = node->left;
 				}
 			}
-			return iterator(greater);
+			return (iterator(greater));
 		}
+
 		const_iterator	lower_bound(const typename T::first_type &key) const
 		{
 			const_node_type	node = end()._node->parent;
 			const_node_type	greater = node->parent;
-			while (node != NULL)
-			{
+			while (node != NULL) {
 				if (key_compare(node->value.first, key))
 					node = node->right;
-				else
-				{
+				else {
 					greater = node;
 					node = node->left;
 				}
 			}
-			return const_iterator(greater);
+			return (const_iterator(greater));
 		}
 
 		iterator	upper_bound(const typename T::first_type &key)
 		{
 			node_type	node = root;
 			node_type	greater = node->parent;
-			while (node != NULL)
-			{
-				if (key_compare(key, node->value.first))
-				{
+			while (node != NULL) {
+				if (key_compare(key, node->value.first)) {
 					greater = node;
 					node = node->left;
-				}
-				else
+				} else
 					node = node->right;
 			}
-			return iterator(greater);
+			return (iterator(greater));
 		}
+
 		const_iterator	upper_bound(const typename T::first_type &key) const
 		{
 			const_node_type	node = root;
 			const_node_type	greater = node->parent;
-			while (node != NULL)
-			{
-				if (key_compare(key, node->value.first))
-				{
+			while (node != NULL) {
+				if (key_compare(key, node->value.first)) {
 					greater = node;
 					node = node->left;
-				}
-				else
+				} else
 					node = node->right;
 			}
-			return const_iterator(greater);
+			return (const_iterator(greater));
 		}
 
-		node_type	leftmost()
-		{
-			return header->left;
-		}
-		const_node_type	leftmost() const
-		{
-			return header->left;
+		node_type	leftmost() {
+			return (header->left);
 		}
 
-		node_type	rightmost()
-		{
-			return header->right;
+		const_node_type	leftmost() const {
+			return (header->left);
 		}
-		const_node_type	rightmost() const
-		{
-			return header->right;
+
+		node_type	rightmost() {
+			return (header->right);
+		}
+
+		const_node_type	rightmost() const {
+			return (header->right);
 		}
 	};
 };
